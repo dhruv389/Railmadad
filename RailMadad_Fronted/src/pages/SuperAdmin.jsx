@@ -68,6 +68,7 @@ const SuperAdmin = () => {
         const filteredSuggestions = jsonData.data.filter((item) =>
           item.name.toLowerCase().includes(value.toLowerCase())
         );
+        console.log(filteredSuggestions);
         setSuggestions(filteredSuggestions);
       } else {
         setSuggestions([]);
@@ -376,12 +377,12 @@ var filteredData=[{ _id:"",
         className="w-full p-3 border border-gray-300 rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       />
       {suggestions.length > 0 && (
-        <ul className="absolute max-h-[40vh]  font-normal overflow-scroll z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg mt-1">
+        <ul className="absolute max-h-[40vh]  font-normal text-black overflow-scroll z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg mt-1">
           {suggestions.map((suggestion, index) => (
             <li
               key={index}
               onClick={() => handleSuggestionClick(suggestion)}
-              className="px-4 py-2 cursor-pointer hover:bg-blue-500 hover:text-white"
+              className="px-4 py-2 text-black cursor-pointer hover:bg-blue-500 "
             >
               {suggestion.name} 
             </li>

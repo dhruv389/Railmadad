@@ -13,7 +13,7 @@ const AdminAnalytics = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:5000/api/getcomplaintsdata');
+      const response = await fetch('http://localhost:5000/api/getcmplaintsdata');
       const data = await response.json();
       setStats(data);
       setLoading(false);

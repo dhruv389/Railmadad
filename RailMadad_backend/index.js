@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const { errorHandler } = require('./middlewares/errorHandler');
 const route1 = require("./routes/UserRoutes");
 const route2 = require("./routes/complaintRoutes");
+const route3 = require("./routes/manageCompaintRoutes");
 const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -27,6 +28,7 @@ app.use(morgan('dev'));
 app.use('/api', route1);
 
 app.use('/api', route2);
+app.use('/api', route3);
 
 // Error Handling Middleware
 app.use(errorHandler);

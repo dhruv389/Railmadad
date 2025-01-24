@@ -9,6 +9,12 @@ import SignUp from "./pages/SignUp";
 import UserComplaints from "./pages/UserComplaints";
 import AdiminDashboard from "./pages/AdiminDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
+import SuperAdmin from "./pages/SuperAdmin";
+import PrivateRoute from "./pages/PrivateRoute";
+
+import AdminLogin from "./pages/AdminLogin";
+import StaffLogin from "./pages/StaffLogin";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -25,6 +31,13 @@ function App() {
         { path: "getowncomplaints", element: <UserComplaints/> },
         { path: "admindashboard", element: <AdiminDashboard/> },
         { path: "staffdashboard", element: <StaffDashboard/> },
+
+
+
+        { path: "superadmin", element: <SuperAdmin/> },
+        { path: "adminlogin", element: <AdminLogin/> },
+        { path: "stafflogin", element: <StaffLogin/> }
+
       ],
     },
   ]);

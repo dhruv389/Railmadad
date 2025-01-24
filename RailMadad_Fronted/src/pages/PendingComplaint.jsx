@@ -1,29 +1,61 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback , useContext } from "react";
 import DetailCard from "../components/DetailCard";
 import { Link } from "react-router-dom";
-import { useFirebase } from "../firebase/firebase";
 
-const PendingComplaint = () => {
-  const { useruid } = useFirebase(); // Get the user ID from Firebase
+import {AuthContext } from '../Context/userContext'
+
+const PendingComplaint = ({activeTab2}) => {
+  
   const [complaintd, setComplaintd] = useState(null);
   const [complaints, setComplaints] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+const {adminData} = useContext(AuthContext);
+ 
 
-  useEffect(() => {
-    const fetchComplaints = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/api/User/${useruid}`); // Replace with your API endpoint
-        const data = await response.json();
-        setComplaints(data);
-      } catch (error) {
-        console.error("Error fetching complaints:", error);
-      }
-    };
+  const openDialog = useCallback((complaint) => {
+  setComplaintd(complaint); // Set the selected complaint
+  setIsDialogOpen(true); // Open the dialog
+}, []);
 
-    if (useruid) {
-      fetchComplaints();
+  const closeDialog = () => setIsDialogOpen(false);
+
+const [loading1, setLoading1] = useState(true); // Loading state
+
+useEffect(() => {
+  const fetchComplaints = async () => {
+    // Wait until adminData and adminData.station are available
+    if (!adminData?.data.station) {
+      setLoading1(false); // Set loading to false if adminData or station is not available
+      return;
     }
-  }, [useruid]);
+
+    try {
+      console.log(activeTab2)
+      const response = await fetch(
+        `http://localhost:5000/api/getadmincomplaints?a=Admin&b=${adminData.data.station}&s=Pending&c=${activeTab2}`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+       console.log(data);
+    
+      setComplaints(data.complaints);
+      console.log( data);
+    } catch (error) {
+      console.error("Error fetching complaints:", error);
+    } finally {
+      setLoading1(false); // Always set loading to false after fetch
+    }
+  };
+
+  fetchComplaints();
+}, [activeTab2]); // Dependency on adminData.station instead of adminData
+
+if (loading1) {
+  return <div>Loading...</div>; // Show a loading indicator while fetching data
+}
+
 
   // Calculate days since the complaint was created
   const calculateDaysSince = (date) => {
@@ -34,15 +66,7 @@ const PendingComplaint = () => {
     return differenceInDays;
   };
 
-  const openDialog = useCallback(
-    (complaint) => {
-      setComplaintd(complaint);
-      setIsDialogOpen(true);
-    },
-    [setComplaintd, setIsDialogOpen]
-  );
 
-  const closeDialog = () => setIsDialogOpen(false);
 
   return (
     <table className="w-full mt-6 text-xs bg-white shadow-md h-auto rounded-lg">
@@ -58,7 +82,7 @@ const PendingComplaint = () => {
         </tr>
       </thead>
       <tbody>
-        {complaints.map((complaint, index) => (
+        {complaints && complaints.map((complaint, index) => (
           <tr
             key={complaint._id}
             className="border-b"

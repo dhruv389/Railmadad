@@ -26,7 +26,7 @@ const complaintSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Pending', 'In Progress', 'Resolved', 'Closed'],
+    enum: ['Pending', 'In Progress', 'Resolved'],
     default: 'Pending'
   },
   media: [
@@ -50,13 +50,23 @@ const complaintSchema = new mongoose.Schema({
   },
   stationName: {
     type: String,
-    // required: true
+    required: true
   },
  
   pnrNumber: {
     type: Number,
     // required: true
   },
+  AfterImage:{
+    type:String,
+    default:"https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+  }
+  ,
+ReceiverType:{
+    type:String,
+    default:"Admin"
+
+}
 });
 
 module.exports = mongoose.model('Complaint', complaintSchema);

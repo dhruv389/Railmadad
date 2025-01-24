@@ -16,22 +16,22 @@ export const AuthProvider = ({ children }) => {
     }
   });
 
-  const [chartData, setChartData] = useState(null);
+  // const [chartData, setChartData] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/getcomplaintsdata'); // Replace with your API endpoint
-        const result = await response.json();
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch('http://localhost:5000/api/getcomlaintsdata'); // Replace with your API endpoint
+  //       const result = await response.json();
      
-       setChartData(result);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+  //      setChartData(result);
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []); 
+  //   fetchData();
+  // }, []); 
 
     const [staffData, setStaffData] = useState(() => {
         try {
@@ -140,7 +140,7 @@ export const AuthProvider = ({ children }) => {
   }, [staffData]);
 
   return (
-    <AuthContext.Provider value={{chartData,loginStaff,Toast, loginAdmin, adminData, staffData, logoutAdmin, logoutStaff , superAdminData, saveSuperAdminToken , logoutSuperAdmin}}>
+    <AuthContext.Provider value={{loginStaff,Toast, loginAdmin, adminData, staffData, logoutAdmin, logoutStaff , superAdminData, saveSuperAdminToken , logoutSuperAdmin}}>
       {children}
     </AuthContext.Provider>
   );

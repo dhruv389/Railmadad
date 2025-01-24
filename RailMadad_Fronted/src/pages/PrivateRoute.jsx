@@ -56,10 +56,10 @@ const User=user;
   }
 
 
-  if(superAdminROute) {
+  // if(superAdminROute) {
     
-    return superAdminData ? children : <Navigate to="/superadminauth" replace />;
-  }
+  //   return superAdminData ? children : <Navigate to="/superadminauth" replace />;
+  // }
 
   // Handle General User Routes
  // return user ? children : <Navigate to="/login" replace />;

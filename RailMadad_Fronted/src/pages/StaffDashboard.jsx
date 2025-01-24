@@ -128,8 +128,8 @@ const AdminDashboard = () => {
     
 
 
-    { activeTab === 'Pending' && <PendingStaff /> }
-      { activeTab === 'Completed' && <CompletedStaff /> }
+    { activeTab === 'Pending' && <PendingStaff activeTab2={activeTab2} /> }
+      { activeTab === 'Completed' && <CompletedStaff activeTab2={activeTab2} /> }
 
     
   </div>

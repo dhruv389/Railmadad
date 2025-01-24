@@ -31,7 +31,7 @@ const AdminDashboard = () => {
     <div className="flex min-h-screen ">
       {/* Sidebar */}
      
-      <aside className="w-1/6 bg-gray-100 flex  flex-col justify-between h-screen items-center h-full p-4">
+      <aside className="w-1/6 bg-gray-100 flex  flex-col justify-between h-screen items-center  p-4">
        <div className="flex h-[80%] w-full gap-6 flex-col">
         <div className="h-[20%] flex flex-col justify-center items-center bg-white rounded-3xl t gap-1">
         <div className=" flex justify-center gap-4 items-center w-full  ">
@@ -125,8 +125,8 @@ const AdminDashboard = () => {
     
 
 
-    { activeTab === 'Pending' && <PendingComplaint /> }
-      { activeTab === 'Completed' && <CompletedComplaint /> }
+    { activeTab === 'Pending' && <PendingComplaint activeTab2={activeTab2} /> }
+      { activeTab === 'Completed' && <CompletedComplaint activeTab2={activeTab2}/> }
 
     
   </div>

@@ -1,9 +1,8 @@
 const  Complaint = require('../models/Complaint');
 
 const getAdminCompaints = async (req, res) => {
-   
+  
   const { a, b, s, c } = req.query;
-
   try {
     // Define the filter parameters dynamically
     const filter = {};
@@ -15,10 +14,12 @@ const getAdminCompaints = async (req, res) => {
 
     // Query the database to find complaints with the specified filters
     const complaints = await Complaint.find(filter);
-
+   
+console.log(complaints);
     // If no complaints are found, return a 404 response
     if (!complaints.length) {
-      return res.status(404).json({
+      console.log("------------");
+      return res.status(200).json({
         message: 'No complaints found with the given criteria.',
       });
     }

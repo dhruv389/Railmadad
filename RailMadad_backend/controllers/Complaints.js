@@ -12,14 +12,15 @@ const createEnqury = async (req, res) => {
   try {
     const { userId, category, description, media, typeOfComplaint } = req.body;
     if(typeOfComplaint === 'Train'){
-      const {pnrNumber}=req.body;
+      const {pnrNumber,TrainClass}=req.body;
       const complaint = new Complaint({
         user: userId,
         category,
         description,
         media,
         typeOfComplaint,
-        pnrNumber
+        pnrNumber,
+        TrainClass
       });
 
       await complaint.save();

@@ -3,10 +3,12 @@ import axios from "axios"; // Import axios for making HTTP requests
 import { BsStars } from "react-icons/bs";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import station from "../Stations.json";
+import jsonData from "../Stations.json";
 import { useFirebase } from '../../firebase/firebase.jsx';
 import { Cloudinary } from "cloudinary-core";
 import Swal from 'sweetalert2'
+import { GoogleGenerativeAI } from '@google/generative-ai'; 
+
 
 function Enquiry() {
   const [selectedStation, setSelectedStation] = useState("");
@@ -19,13 +21,61 @@ function Enquiry() {
   const [filteredNames, setFilteredNames] = useState([]);
   const firebase = useFirebase();
   const [uidd, setuidd] = useState("");
+  const[image,setImage]=useState(null);
   //******************************************************************************* */
+
+
+
+  const convertImageToBase64 = async (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result.split(',')[1]); 
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+
+
+
+
+
+
 
   const handleFileUpload = async (event) => {
     const files = event.target.files;
     const uploadedUrls = [];
+    setImage(files[0]);
 
-    const cloudinaryCore = new Cloudinary({
+
+    const genAI = new GoogleGenerativeAI("AIzaSyCZpCZCeOHtMk2s2T3_ZUuVoifq_b4dIKQ"); 
+
+   
+
+  console.log(files[0]);
+
+    if (files[0]) {
+      console.log("*******");
+      try {
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    
+        const result = await model.generateContent([
+          "Identify the most relevant category for the image from: Engineering, Electrical, Traffic, Medical, Security, Sanitation, or Food Department. Respond with the category name or 'false' if no match.",
+          {
+            inlineData: {
+              data: await convertImageToBase64(files[0]),
+              mimeType: 'image/jpeg', 
+            },
+          },
+        ]);
+
+        const isValid = result.response.text().trim();
+        console.log(isValid+"--------------------");
+        setCategory(isValid === "false" ? "No Match" : isValid); 
+        if(isValid === "false") {
+       window.alert("No Match Found");
+        }
+        else {
+          const cloudinaryCore = new Cloudinary({
       cloud_name: "dyugrhvaq",
       api_key: "464611998742645",
     });
@@ -53,20 +103,45 @@ function Enquiry() {
       }
     }
 
-    setMediaUrls(uploadedUrls); // Update the state with the uploaded file URLs
+
+    setMediaUrls(uploadedUrls);
+        }
+        console.log(isValid+"--------------------");
+      } catch (error) {
+        console.error('Error analyzing image:', error.message);
+        setCategory("Error");
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+     // Update the state with the uploaded file URLs
   };
 
   //*********************************************************************************** */
 
   useEffect(() => {
-    // Extracting station names from the JSON data
+    
     if(firebase.user)
  console.log(firebase.useruid);
-    //if(firebase.user.user.uid) setuidd(firebase.user.user.uid);
-    const names = station.stations.map((station) =>
-      station.stnName.toLowerCase()
-    );
-    setFilteredNames(names);
+    
+ 
   }, []);
 
   const handleFileChange = (e) => {
@@ -76,14 +151,30 @@ function Enquiry() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const complaintData = {
+
+
+    try {
+      const prompt = `
+        Validate the following complaint description: "${description}".
+        Check if it matches the category "${category}" or relates to train or station problems.
+        Respond with "true" if valid, or "false" if invalid.
+      `;
+
+      const response = await genAI.generateText({
+        prompt: prompt,
+        maxTokens: 5, // Adjust as needed
+      });
+       const isvalid=response.text.trim() === 'true';
+      if (isvalid) {
+        const complaintData = {
       userId: firebase.useruid, // Replace with actual user ID
       category,
       description,
       media: mediaUrls,
       typeOfComplaint,
-      stationName: typeOfComplaint === "Station" ? selectedStation : undefined,
-      pnrNumber: typeOfComplaint === "Train" ? trainNo : undefined,
+      stationName: selectedStation,
+      pnrNumber: trainNo ,
+      TrainClass:trainClass,
     };
 
     try {
@@ -106,7 +197,51 @@ function Enquiry() {
     } catch (error) {
       console.error("Error submitting complaint:", error);
     }
+      }
+      else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Invalid Complaint!",})
+      }
+      
+    } catch (error) {
+      console.error("Error validating complaint:", error);
+      
+    }
+
+
+
+
+    
   };
+
+
+  const [inputValue, setInputValue] = useState("");
+    const [suggestions, setSuggestions] = useState([]);
+  
+    const handleInputChange2 = (e) => {
+      const value = e.target.value;
+      setInputValue(value);
+    
+      if (value) {
+        const filteredSuggestions = jsonData.data.filter((item) =>
+          item.name.toLowerCase().includes(inputValue.toLowerCase())
+        );
+       
+        setSuggestions(filteredSuggestions);
+      } else {
+        console.log("jdjd");
+        setSuggestions([]);
+      }
+    };
+  
+    const handleSuggestionClick = (suggestion) => {
+      setInputValue(suggestion.name);
+      setSuggestions([]);
+    };
+
+
 
   return (
     <div className="w-full h-full flex flex-col gap-2 justify-start overflow-y-scroll items-center py-8">
@@ -114,27 +249,7 @@ function Enquiry() {
       <form onSubmit={handleSubmit} className="w-[60%]">
         
 
-        <div className="text-sm font-semibold flex justify-start mt-4 flex-col gap-1">
-          <p>Category:</p>
-          <input
-            type="text"
-            placeholder="Engineering Department, Electrical Department, Traffic Department, Medical Department, Security Department, Sanitation Department, Food Department"
-            className="h-[3rem] py-3 px-2 w-full hover:border-2 hover:border-black rounded-xl border"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          />
-        </div>
-
-        <div className="mt-6 text-sm font-semibold flex justify-start flex-col gap-1">
-          <p>Train Class:</p>
-          <input
-            type="text"
-            placeholder="e.g., 1A, 2A , 3A"
-            className="h-[3rem] py-3 px-2 w-full hover:border-2 hover:border-black rounded-xl border"
-            value={trainClass}
-            onChange={(e) => setTrainClass(e.target.value)}
-          />
-        </div>
+        
 
         <div className="mt-6 text-sm font-semibold flex justify-start flex-col gap-1">
           <p>Type Of Complaint:</p>
@@ -159,44 +274,40 @@ function Enquiry() {
         </div>
 
         {typeOfComplaint === "Station" ? (
-          <div className="mt-6 text-sm font-semibold flex justify-start flex-col gap-1">
+          <div className="w-full  mt-6 text-sm  font-semibold flex justify-start flex-col gap-1">
             <p>Station Name:</p>
-            {/* <Autocomplete
-              disablePortal
-              options={filteredNames}
-              sx={{
-                width: "100%",
-                marginTop: "7px",
-                borderRadius: "10px",
-                fontFamily: "Poppins",
-                fontSize: "16px",
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  onChange={(e) => setSelectedStation(e.target.value)}
-                  value={selectedStation}
-                  label="Station Name"
-                  sx={{
-                    "& .MuiInputBase-root": {
-                      height: "50px",
-                      borderRadius: "10px",
-                    },
-                  }}
-                />
-              )}
-            /> */}
-            <input
-            type="text"
-            placeholder=""
-            className="h-[3rem] py-3 px-2 w-full hover:border-2 hover:border-black rounded-xl border"
-            value={selectedStation}
-            onChange={(e) => setSelectedStation(e.target.value)}
-          />
+           
+           
+
+          <div className="relative w-full  mx-auto ">
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange2}
+        placeholder="Search station..."
+        className="w-full p-3 border border-gray-300 rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      />
+      {suggestions.length > 0 && (
+        <ul className="absolute max-h-[40vh]  font-normal overflow-scroll z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg mt-1">
+          {suggestions.map((suggestion, index) => (
+            <li
+              key={index}
+              onClick={() => handleSuggestionClick(suggestion)}
+              className="px-4 py-2 cursor-pointer hover:bg-blue-500 hover:text-white"
+            >
+              {suggestion.name} 
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
 
 
           </div>
+
         ) :
+        <div className="">
+
         <div className="text-sm font-semibold flex justify-start mt-4 flex-col gap-1">
           <p>Train No:</p>
           <input
@@ -207,17 +318,73 @@ function Enquiry() {
             onChange={(e) => setTrainNo(e.target.value)}
           />
         </div>
-        
+
+
+
+
+        <div className="mt-6 text-sm font-semibold flex justify-start flex-col gap-1">
+          <p>Train Class:</p>
+          <input
+            type="text"
+            placeholder="e.g., 1A, 2A , 3A"
+            className="h-[3rem] py-3 px-2 w-full hover:border-2 hover:border-black rounded-xl border"
+            value={trainClass}
+            onChange={(e) => setTrainClass(e.target.value)}
+          />
+        </div>
+
+
+
+
+        <div className="w-full  mt-6 text-sm  font-semibold flex justify-start flex-col gap-1">
+            <p>Station Name:</p>
+           
+           
+
+          <div className="relative w-full  mx-auto ">
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange2}
+        placeholder="Search station..."
+        className="w-full p-3 border border-gray-300 rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      />
+      {suggestions.length > 0 && (
+        <ul className="absolute max-h-[40vh]  font-normal overflow-scroll z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg mt-1">
+          {suggestions.map((suggestion, index) => (
+            <li
+              key={index}
+              onClick={() => handleSuggestionClick(suggestion)}
+              className="px-4 py-2 cursor-pointer hover:bg-blue-500 hover:text-white"
+            >
+              {suggestion.name} 
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+
+          </div>
+
+
+
+
+
+
+
+
+
+        </div>
+
         
         }
 
+        
 
 
 
-
-
-
-   { mediaUrls.length >0 ? <img src={mediaUrls[0]} alt="" className="w-[40%] mt-5 rounded-xl h-[15rem]" /> :
+   { image ? <img src={URL.createObjectURL(image)} alt="" className="w-[40%] mt-5 rounded-xl h-[15rem]" /> :
    (<div className="flex items-center justify-start w-full mt-6 flex-col"> <h1 className="w-full py-3 text-sm font-semibold">
             Choose File From Device
           </h1>

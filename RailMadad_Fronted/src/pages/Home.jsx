@@ -142,25 +142,6 @@ const Home = () => {
 			
 		
 	
-			
-
-			<div className="h-[27rem]  md:flex-col md:gap-0 custom:h-auto  w-[80%] flex  justify-between items-center  ">
-
-
-
-
-				<div className="h-full w-[52%] md:w-[98%] "   ><img src={rob1} alt="" className='h-full w-full object-cover' /></div>
-
-
-				<div className="h-[50%] w-[48%] md:mt-0 mt-20 gap-4 md:w-full  justify-center items-center flex flex-col ">
-					<h1 className=' custom:text-[1.2rem] text-[1.9rem] font-bold'>Meet <span className='text-[#8FDBCF]'>Robo</span> : Your AI Model for Smart Complaint Categorization</h1>
-					<p className='text-lg text-gray-500 custom:text-sm'>Upload your photos or videos, and let Robo's AI efficiently sort and direct your railway complaints to the right place</p>
-				</div>
-
-
-			</div>
-
-
 
 
 
