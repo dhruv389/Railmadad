@@ -33,7 +33,7 @@ const SuperAdmin = () => {
           },
         });
         // Log the full data for debugging
-        setAccounts(response.data); // Assuming response.data contains the accounts
+        setAccounts(response.data.data); // Assuming response.data contains the accounts
       } catch (error) {
         console.log(error.response);
         if(error.response.status === 403) {
@@ -104,7 +104,10 @@ var filteredData=[{ _id:"",
     email: '',
     password: ''}];
   if(accounts)
-  { filteredData = accounts.filter(item =>
+  { 
+    console.log("accounts",accounts);
+    
+    filteredData = accounts.filter(item =>
         Object.values(item).some(val =>
             typeof val === 'string' && val.toLowerCase().includes(searchTerm.toLowerCase())
         )
@@ -126,7 +129,7 @@ var filteredData=[{ _id:"",
       
 
         try {
-            // Make a DELETE request to the backend
+            
             const response = await axios.put(
               `http://localhost:5000/api/updatecreatedAccounts/${id}`,
               {
@@ -161,10 +164,10 @@ var filteredData=[{ _id:"",
            console.log("----------",id);
         try {
           // Make a DELETE request to the backend
-          const response = await axios.delete("http://localhost:5000/api/deleteCreatedAccounts", {
+          const response = await axios.delete(`http://localhost:5000/api/deleteCreatedAccounts/${id}`, {
             headers: {
               Authorization: `Bearer ${superAdminData}`,
-              AccountId: id, // Include id in the headers
+              
             },
           });
           // Handle success response
@@ -252,7 +255,7 @@ var filteredData=[{ _id:"",
           const response = await axios.post('http://localhost:5000/api/createnewaccount', {
             email: newRow.email,
             password:newRow.password,
-            userType:selectedOption,
+            userType:selectedOption=== "admin" ? "Admin" : "Staff",
             station:inputValue,
           },
           {

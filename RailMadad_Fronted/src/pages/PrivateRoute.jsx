@@ -26,7 +26,7 @@ const User=user;
 
   // Handle Admin Login
   if (isAdminLoginRoute) {
-    return adminData ? <Navigate to="/admindashboard/adminhome" replace /> : children;
+    return adminData ? <Navigate to="/admindashboard" replace /> : children;
   }
 
   // Handle Staff Routes
@@ -56,10 +56,10 @@ const User=user;
   }
 
 
-  // if(superAdminROute) {
+  if(superAdminROute) {
     
-  //   return superAdminData ? children : <Navigate to="/superadminauth" replace />;
-  // }
+    return superAdminData ? children : <Navigate to="/superadminauth" replace />;
+  }
 
   // Handle General User Routes
  // return user ? children : <Navigate to="/login" replace />;

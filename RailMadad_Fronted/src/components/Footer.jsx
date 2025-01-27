@@ -4,7 +4,7 @@ import CustomizedDialogs from './DialogBox'
 
 const Footer = () => {
   return (
-    <footer className="footbar">
+    <footer className="footbar bg-black">
     <div>
       <p>Copyright &copy;2019 RAILMADAD. All Rights Reserved.</p>
     </div>

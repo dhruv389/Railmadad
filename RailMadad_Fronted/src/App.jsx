@@ -11,7 +11,7 @@ import AdiminDashboard from "./pages/AdiminDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
 import SuperAdmin from "./pages/SuperAdmin";
 import PrivateRoute from "./pages/PrivateRoute";
-
+import Stepper from "./pages/Stepper";
 import AdminLogin from "./pages/AdminLogin";
 import StaffLogin from "./pages/StaffLogin";
 
@@ -26,15 +26,55 @@ function App() {
         { path: "dashboard", element: <Dashboard /> },
         { path: "login", element: <Login /> },
         { path: "signup", element: <SignUp/> },
-        { path: "dashboard/*", element: <Dashboard /> },
+        // { path: "dashboard/*", element: <Dashboard /> },
        
         { path: "getowncomplaints", element: <UserComplaints/> },
-        { path: "admindashboard", element: <AdiminDashboard/> },
-        { path: "staffdashboard", element: <StaffDashboard/> },
+        { path: "superadminauth", element: <Stepper/> },
+        // { path: "admindashboard", element: <AdiminDashboard/> },
+        // { path: "staffdashboard", element: <StaffDashboard/> },
+
+        {
+          path: 'admindashboard',
+          element: (
+            <PrivateRoute>
+             <AdiminDashboard/>
+            </PrivateRoute>
+          ),
+        },
 
 
+        {
+          path: 'staffdashboard',
+          element: (
+            <PrivateRoute>
+             <StaffDashboard/>
+            </PrivateRoute>
+          ),
+        },
 
-        { path: "superadmin", element: <SuperAdmin/> },
+        
+        {
+          path: 'dashboard/*',
+          element: (
+            <PrivateRoute>
+            <Dashboard />
+            </PrivateRoute>
+          ),
+        },
+
+        {
+          path: 'superadmin',
+          element: (
+            <PrivateRoute>
+            <SuperAdmin/> 
+            </PrivateRoute>
+          ),
+        },
+
+        
+
+
+     
         { path: "adminlogin", element: <AdminLogin/> },
         { path: "stafflogin", element: <StaffLogin/> }
 

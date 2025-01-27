@@ -27,7 +27,7 @@ const authMiddleware = (req, res, next) => {
 const ComplaintsauthMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
   const SECRET_KEY = process.env.SECRET_KEY || 'EYDVHB8y849guyihsgh79GJRT'; // Use environment variable
-  
+ 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ message: 'Authentication token missing or invalid format' });
   }

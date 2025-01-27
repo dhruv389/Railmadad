@@ -13,6 +13,14 @@ const PendingStaff = ({activeTab2}) => {
   
 const [loading1, setLoading1] = useState(true); // Loading state
 
+
+const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+
+
+const openDialog = () => setIsDialogOpen(true);
+const closeDialog = () => setIsDialogOpen(false);
+
 useEffect(() => {
   const fetchComplaints = async () => {
     // Wait until staffData and adminData.station are available
@@ -24,7 +32,7 @@ useEffect(() => {
     try {
       console.log(activeTab2)
       const response = await fetch(
-        `http://localhost:5000/api/getadmincomplaints?a=Admin&b=${staffData.data.station}&s=Pending&c=${activeTab2}`
+        `http://localhost:5000/api/getadmincomplaints?a=Staff&b=${staffData.data.station}&s=Pending&c=${activeTab2}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -65,12 +73,7 @@ if (loading1) {
 
 
 
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-
-
-    const openDialog = () => setIsDialogOpen(true);
-    const closeDialog = () => setIsDialogOpen(false);
+   
 
 
    
@@ -97,7 +100,7 @@ if (loading1) {
       </tr>
     </thead>
     <tbody>
-      {complaints.map((complaint, index) => (
+      {complaints && complaints.map((complaint, index) => (
                <tr
                  key={complaint._id}
                  className="border-b"

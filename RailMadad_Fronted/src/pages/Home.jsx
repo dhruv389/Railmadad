@@ -1,13 +1,14 @@
 import React from 'react'
 
-import train from "../Images/train4.png"
+import train from "../Images/train7.png"
 import i1 from "../Images/download.png"
 import i2 from "../Images/download (1).png"
 import i3 from "../Images/download (2).png"
+
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { Tilt } from '@jdion/tilt-react'
 
-import rob1 from "../Images/rob2.gif"
+
 
 
 const Home = () => {
@@ -54,11 +55,11 @@ const Home = () => {
 
 		<div className={`flex min-h-[80vh] flex-col w-screen justify-center items-center `}>
 
-			<div className="flex min-h-[80vh]   flex-col w-screen justify-center items-center ">
-				<div className="w-[95%] custom:pb-2 gap-3 custom:w-[100%] custom:text-center custom:items-center mt-10 custom:mt-0  h-[100%]  flex items-center justify-center flex-col">
-					<Tilt>
-						<h1 className='text-[3rem] custom:text-[1.7rem] font-bold text-center  cursor-pointer '>Welcome to <span className='text-red-800'>Rail Madad</span> : Your <span className='text-red-800'>Trusted</span>  Platform for Resolving <span className='text-red-800'>Railway</span>  Concerns</h1> </Tilt>
-					<p className='text-center custom:text-sm w-[80%] font-medium'>Whether it's issues with tickets, food, cleanliness, or any other railway-related problems, we&apos;re here to help you find swift solutions and ensure a better travel experience.</p>
+			<div className="flex min-h-[75vh] px-[4rem] gap-4  w-screen  justify-around items-center ">
+				<div className="w-[45%] custom:pb-2 gap-3 custom:w-[100%] custom:text-center custom:items-center  custom:mt-0  h-[100%]  flex items-start justify-start flex-col">
+				
+						<h1 className='text-[3rem] custom:text-[1.7rem]  font-normal text-start  cursor-pointer '>Welcome to <span className='text-yellow-400'>Rail Madad</span> : Your <span className='text-yellow-400'>Trusted</span>  Platform for Resolving <span className='text-yellow-400'>Railway</span>  Concerns</h1>
+					<p className='text-start text-gray-800 custom:text-sm w-[80%]'>Whether it's issues with tickets, food, cleanliness, or any other railway-related problems, we&apos;re here to help you find swift solutions and ensure a better travel experience.</p>
 
 					{/* <Link to="/dashboard" className='w-[70%] bg-black rounded-xl flex justify-center items-center mt-8 text-white h-[3rem]'>
 				<Tilt > Get started
@@ -68,8 +69,9 @@ const Home = () => {
 				</div>
 
 
-				<div className="w-[80%]  custom:mt-[0rem] custom:w-[100%] flex mt-[1rem] justify-center items-center  h-[25rem]">
-				<img src="https://images.pexels.com/photos/1170187/pexels-photo-1170187.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" className='h-full rounded-3xl  object-cover w-full ' />
+				<div className="w-[40%]  bg-yellow-300 custom:mt-[0rem] custom:w-[100%] rounded-bl-[5rem]  rounded-tr-[5rem] flex justify-center items-center  h-[25rem]">
+				
+				<img src={train} alt="" className=' rounded-full  object-contain' />
 			</div>
 
 
@@ -79,10 +81,10 @@ const Home = () => {
 
 
 			<div className="mt-2">
-				<h1 className='text-[2rem] md:text-center md:text-[1.2rem] font-bold text-red-900 '> Services</h1>
+				<h1 className='text-[2rem] md:text-center md:text-[1.2rem] font-bold text-yellow-400 '> Services</h1>
 			</div>
 
-			<div className="flex  text-xs w-[80%] mt-1  pt-7 rounded-[2rem]  justify-center custom:w-[90%] custom:px-10  custom:overflow-x-scroll  gap-12 items-start">
+			<div className="flex  text-xs w-[85%] mt-1  pt-7 rounded-[2rem]  justify-center custom:w-[90%] custom:px-10  custom:overflow-x-scroll  gap-12 items-start">
 				<a href="https://www.irctc.co.in/nget/train-search" target='blank'>
 
 					<div className="flex flex-col justify-center text-center items-center  shadow-lg rounded-lg py-2 w-[6rem] h-[2re] gap-2">
@@ -161,7 +163,7 @@ const Home = () => {
 
 
 			<div className="mt-20">
-				<h1 className='text-[2rem] md:text-center md:text-[1.2rem] font-bold'> <span className='text-red-900'>Explore Categories</span>: Support for All Railway Concerns</h1>
+				<h1 className='text-[2rem] md:text-center md:text-[1.2rem] font-bold'> <span className='text-yellow-400'>Explore Categories :</span> Support for All Railway Concerns</h1>
 			</div>
 			<div className=" bg-slate-50 py-10  md:h-auto items-center md:flex-col w-full flex justify-center gap-10 h-[27rem] mt-8 ">
 				<div className="rounded-[20px] md:w-[90%] w-[35%] h-[95%] ">

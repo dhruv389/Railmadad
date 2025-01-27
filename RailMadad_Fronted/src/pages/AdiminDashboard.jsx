@@ -67,7 +67,7 @@ const AdminDashboard = () => {
       <div className="flex-grow w-[80vw]   bg-gray-50 p-6">
     <div className="flex justify-between items-center">
     {
-  activeTab === 'Pending'? <h1 className="text-2xl font-bold">Pending Comlpaints List</h1>  : <h1 className="text-2xl font-bold">Completed Comlpaints List</h1>
+  activeTab === 'Pending'? <h1 className="text-2xl font-mormal">Pending Comlpaints List</h1>  : <h1 className="text-2xl font-bold">Completed Comlpaints List</h1>
 
     }
       
@@ -105,13 +105,13 @@ const AdminDashboard = () => {
       />
     </div>
 
-      <h1 className="mt-10 ml-8 font-bold text-lg">Cetegories :</h1>
+      <h1 className="mt-10 ml-8 font-mormal text-lg">Cetegories :</h1>
       <div className="flex flex-wrap space-x-2 gap-2  rounded-full p-2">
     
         {options.map((option) => (
           <div
             key={option}
-            className={`px-4 py-2 bg-white rounded-full text-sm cursor-pointer whitespace-nowrap ${
+            className={`px-4 py-2 shadow-sm bg-white rounded-full text-sm cursor-pointer whitespace-nowrap ${
               activeTab2 === option ? 'bg-blue-100 text-blue-600' : 'text-gray-700'
             }`}
             onClick={() => setActiveTab2(option)}

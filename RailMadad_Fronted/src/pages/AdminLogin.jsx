@@ -30,7 +30,7 @@ const AdminLogin = () => {
           console.log('Login successful:', response.data);
           loginAdmin(response.data);
           // Navigate to a dashboard or perform further actions
-          navigate('/admindashboard/adminhome', { replace: true });
+          navigate('/admindashboard', { replace: true });
           Toast.fire({
             icon: "success",
             title: "Signed in successfully as Admin",

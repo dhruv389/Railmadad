@@ -12,7 +12,7 @@ const PendingComplaint = ({activeTab2}) => {
 const {adminData} = useContext(AuthContext);
  
 
-  const openDialog = useCallback((complaint) => {
+const openDialog = useCallback((complaint) => {
   setComplaintd(complaint); // Set the selected complaint
   setIsDialogOpen(true); // Open the dialog
 }, []);
@@ -69,16 +69,16 @@ if (loading1) {
 
 
   return (
-    <table className="w-full mt-6 text-xs bg-white shadow-md h-auto rounded-lg">
-      <thead>
-        <tr className="text-left bg-gray-100">
-          <th className="p-3">No.</th>
-          <th className="p-3">Complaint</th>
-          <th className="p-3">Category</th>
-          <th className="p-3">User</th>
-          <th className="p-3">Date</th>
-          <th className="p-3">Status</th>
-          <th className="p-3">Actions</th>
+    <table className="w-full mt-6 rounded-lg text-xs  shadow-md h-auto ">
+      <thead className="rounded-3xl">
+        <tr className="text-left   bg-black text-white">
+          <th className="p-3 rounded-l-xl">No.</th>
+          <th className="p-3 ">Complaint</th>
+          <th className="p-3 ">Category</th>
+          <th className="p-3 ">User</th>
+          <th className="p-3 ">Date</th>
+          <th className="p-3 ">Status</th>
+          <th className="p-3 rounded-r-xl">Actions</th>
         </tr>
       </thead>
       <tbody>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useState ,useEffect,useContext} from 'react';
 import {AuthContext} from '../Context/userContext';
 
-const PendingComplaint = () => {
+const PendingComplaint = ({activeTab2}) => {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 const [complaints, setComplaints] = useState([]);
@@ -55,6 +55,18 @@ const [complaints, setComplaints] = useState([]);
     }
 
 
+
+
+    const calculateDaysSince = (date) => {
+      const createdAtDate = new Date(date);
+      const currentDate = new Date();
+      const differenceInTime = currentDate - createdAtDate;
+      const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24)); // Convert time difference from milliseconds to days
+      return differenceInDays;
+    };
+  
+
+
   return (
     <table className="w-full mt-6 text-xs bg-white shadow-md rounded-lg">
      <DetailCard3
@@ -78,7 +90,7 @@ const [complaints, setComplaints] = useState([]);
          </tr>
        </thead>
        <tbody>
-         {complaints.map((complaint, index) => (
+         {complaints && complaints.map((complaint, index) => (
                   <tr
                     key={complaint._id}
                     className="border-b"

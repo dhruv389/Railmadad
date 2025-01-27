@@ -5,7 +5,9 @@ import Sidebar from './Sidebar'
 import { useFirebase  } from '../firebase/firebase';
 import { signOut } from 'firebase/auth';
 import Swal from 'sweetalert2'
+import { TiUser } from "react-icons/ti";
 import Dropdown from './Dropdown';
+import { IoLogOut } from "react-icons/io5";
 
 const Header = () => {
 const firebase = useFirebase();
@@ -48,17 +50,17 @@ const firebase = useFirebase();
 };
  
   return (
-    <div className="navbar">
-    <div className="h-[5rem] gap-10 custom:gap-1 custom:w-full  flex w-[40%]">
+    <div className="navbar  ">
+    <div className="h-[3rem] gap-4 custom:gap-1 custom:w-full  flex w-[40%]">
     <div className="hidden custom:flex custom:pt-4"> <Sidebar/></div>
    
-    <Link to="/" className="smj-icon  h-[5rem]   w-[5rem]" >
+    <Link to="/" className="smj-icon  h-[3rem]   w-[5rem]" >
     <img className="h-full  w-full object-contain " src={icon1} alt=""/>
     </Link>
           
-            <div className="rm-icon custom:ml-2 custom:flex custom:justify-center custom:items-center w-full">
-                <h1 className="i-head font-bold text-[3rem] custom:text-[2rem]">RailMadad</h1>
-                <p className='custom:hidden'>For Inquiry, Assistance & Grievance Redressal</p>
+            <div className="  flex justify-start items-center custom:ml-2 custom:flex custom:justify-center custom:items-center w-full">
+                <h1 className=" text-yellow-300 font-medium text-[2.5rem] custom:text-[2rem]">RailMadad</h1>
+               
             </div>
             </div>
             {/* <div className="security w-[30%]">
@@ -69,22 +71,23 @@ const firebase = useFirebase();
             </div> */}
 
  
-            
+            <div className="w-[35%] mr-7 flex justify-center items-center ">
 
             {
-              !firebase.isLoggedin  && ( <div className="btns custom:hidden w-[30%] flex gap-10 justify-end ">
+              !firebase.isLoggedin  && ( <div className="btns h-full  custom:hidden  flex gap-10 justify-end ">
                
                <Link to="/login"><button className="login-btn" type="submit">Login</button></Link>
-               <Link to="/signup"> <button className="login-btn" type="submit">Sign Up</button>  </Link>  
+               <Link to="/signup"> <button className="bg-black py-2 text-sm gap-2 hover:bg-yellow-400 px-2 rounded-lg text-white flex justify-between items-center " type="submit">Sign Up</button>  </Link>  
             </div>)
             }
             {
-              firebase.isLoggedin  && <div className="btns custom:hidden w-[30%] flex gap-10 justify-end ">
-              <Dropdown/>
-              <button className="login-btn" type="submit" onClick={handleLogout}>Logout</button>
+              firebase.isLoggedin  && <div className="btns h-full custom:hidden flex gap-10 justify-end ">
+               <Link to="/dashboard/enquiry" className='bg-black hover:bg-yellow-400 w-[60%]  text-sm gap-2 px-3 rounded-lg text-white flex justify-between items-center'> <TiUser fontSize={"25px"}/> Admin Dashboard </Link>
+              <button className="bg-black text-sm gap-2 hover:bg-yellow-400 px-3 rounded-lg text-white flex justify-between items-center py-2 " type="submit" onClick={handleLogout}> <IoLogOut fontSize={"25px"}/> Logout </button>
               </div> 
             }
-           
+            <Dropdown/>
+            </div>
         </div>
   )
 }

@@ -13,7 +13,7 @@ import { HiBell } from "react-icons/hi";
 
 
 
-const AdminDashboard = () => {
+const StaffDashboard = () => {
 
   const options = [
     'Engineering Department',
@@ -148,4 +148,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default StaffDashboard;
