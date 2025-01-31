@@ -1,7 +1,8 @@
 import React from 'react'
 import DetailCard3 from "../components/DetailCard3";
+import DetailCard2 from '../components/DetailCard2';
 import { Link } from "react-router-dom";
-import { useState ,useEffect,useContext} from 'react';
+import { useState ,useEffect,useContext,useCallback} from 'react';
 import {AuthContext} from '../Context/userContext';
 
 const PendingComplaint = ({activeTab2}) => {
@@ -9,9 +10,13 @@ const PendingComplaint = ({activeTab2}) => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 const [complaints, setComplaints] = useState([]);
   const {staffData} = useContext(AuthContext);
-
-
-    const openDialog = () => setIsDialogOpen(true);
+  const [complaintd, setComplaintd] = useState(null);
+  
+    
+    const openDialog = useCallback((complaint) => {
+      setComplaintd(complaint); // Set the selected complaint
+      setIsDialogOpen(true); // Open the dialog
+    }, []);
     const closeDialog = () => setIsDialogOpen(false);
 
 
@@ -72,9 +77,7 @@ const [complaints, setComplaints] = useState([]);
      <DetailCard3
         isOpen={isDialogOpen}
         onClose={closeDialog}
-        title="Success"
-        text="Your action was successful!"
-        icon="success"
+        complaint={complaintd}
       />
    <thead>
          <tr className="text-left bg-gray-100">
@@ -90,7 +93,7 @@ const [complaints, setComplaints] = useState([]);
          </tr>
        </thead>
        <tbody>
-         {complaints && complaints.map((complaint, index) => (
+         {complaints ? complaints.map((complaint, index) => (
                   <tr
                     key={complaint._id}
                     className="border-b"
@@ -124,11 +127,13 @@ const [complaints, setComplaints] = useState([]);
                         to="#"
                         className="bg-purple-700 mb-6 text-sm px-2 py-1 rounded-full text-white"
                       >
-                        Send
+                        Done
                       </Link>
                     </td>
                   </tr>
-                ))}
+                )):  <tr>
+          <td colSpan="6" className="p-3 py-[6rem] text-center font-medium text-base">No complaints found in {activeTab2}</td>
+        </tr>}
    
    
    

@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading,setIsLoading] = useState(true);
   const [adminData, setAdminData] = useState(() => {
     try {
       const savedData = localStorage.getItem('adminData');
@@ -140,7 +140,7 @@ export const AuthProvider = ({ children }) => {
   }, [staffData]);
 
   return (
-    <AuthContext.Provider value={{loginStaff,Toast, loginAdmin, adminData, staffData, logoutAdmin, logoutStaff , superAdminData, saveSuperAdminToken , logoutSuperAdmin}}>
+    <AuthContext.Provider value={{loginStaff,Toast, loginAdmin, adminData, staffData, logoutAdmin, logoutStaff , superAdminData, saveSuperAdminToken , logoutSuperAdmin , isLoading, setIsLoading}}>
       {children}
     </AuthContext.Provider>
   );

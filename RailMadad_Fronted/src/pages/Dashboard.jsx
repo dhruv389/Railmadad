@@ -26,68 +26,29 @@ const Dashboard = () => {
     <div className="w-screen bg-[#f6f8f9]  min-h-screen flex  justify-center items-center" style={{ backgroundImage: `url(#)` ,backgroundRepeat:"no-repeat", objectFit:"cover" ,backgroundSize:"100%" }}>
     
       <div className="w-screen  gap-6 min-h-screen  flex justify-center items-center   ">
-        <div
-          className="w-[9rem] custom:hidden rounded-[2rem] text-sm justify-center items-center  bg-white py-10 px-10 flex flex-col gap-7"
-          // style={{ boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
-        >
-
-<button
-            className="h-[3.5rem] flex-col text-center font-medium flex justify-start pl-4 items-center "
-            onClick={() =>
-              handleTabClick("enquiry")
-            }
-          >
-            <FaBuildingUser className="text-[25px]" />
-            <p>Complaint</p>
-          </button>
-
-          {/* <button
-            className="h-[3.5rem] flex-col text-center font-medium flex justify-start pl-4 items-center "
-            onClick={() =>
-              handleTabClick("train")
-            }
-          >
-            <FaTrainSubway className="text-[25px]" />
-            <p>Train Complaint</p>
-          </button>
-
-          <button
-            className="h-[3.5rem] flex-col text-center font-medium flex justify-start pl-4 items-center "
-            onClick={() =>
-              handleTabClick("station")
-            }
-          >
-         
-            <HiMiniBuildingLibrary className="text-[25px]" />
-            <p>Station</p>
-          </button>
-
-
-          <button
-            className="h-[3.5rem] flex-col text-center font-medium flex justify-start pl-4 items-center "
-            onClick={() =>
-              handleTabClick("apprecian")
-            }
-          >
-         
-         <RiFileList3Fill className="text-[25px]" />
-         <p>Apprecian</p>
-          </button> */}
-
-          
-
-          
-
-          <button
-            className="h-auto flex-col text-center font-medium flex justify-start pl-4 items-center "
-            onClick={() =>
-              handleTabClick("track")
-            }
-          >
-            <HiOutlineClipboardDocumentList  className="text-[25px]" size={"25px"} />
-            <p>Track Your concern</p>
-          </button>
+      <div className="w-[8rem]      rounded-3xl p-6 flex flex-col gap-8 items-center transition-all duration-300 hover:shadow-xl">
+      {/* Complaint Button */}
+      <button
+        className="flex flex-col items-center text-gray-800 font-semibold gap-2 hover:scale-110 transition duration-300"
+        onClick={() => handleTabClick("enquiry")}
+      >
+        <div className="bg-blue-500 text-white p-3 rounded-full shadow-md hover:bg-blue-600 transition duration-300">
+          <FaBuildingUser className="text-2xl" />
         </div>
+        <p className="text-sm tracking-wide">Complaint</p>
+      </button>
+
+      {/* Track Concern Button */}
+      <button
+        className="flex flex-col items-center text-gray-800 font-semibold gap-2 hover:scale-110 transition duration-300"
+        onClick={() => handleTabClick("track")}
+      >
+        <div className="bg-green-500 text-white p-3 rounded-full shadow-md hover:bg-green-600 transition duration-300">
+          <HiOutlineClipboardDocumentList className="text-2xl" />
+        </div>
+        <p className="text-sm tracking-wide text-center">Track Concern</p>
+      </button>
+    </div>
 
         <div
           className="w-[65%] custom:w-[97%] bg-white rounded-3xl  h-[85vh]"

@@ -35,16 +35,16 @@ const Track = () => {
   };
 
   return (
-    <table className="w-full mt-6 text-xs bg-white shadow-md h-auto rounded-lg">
+    <table className="w-full  text-xs bg-white shadow-md h-auto rounded-lg">
       <thead>
-        <tr className="text-left bg-gray-100">
-          <th className="p-3">No.</th>
+        <tr className="text-left rounded-l-lg  rounded-r-lg  bg-yellow-300">
+          <th className="p-3 rounded-l-lg">No.</th>
           <th className="p-3">Complaint</th>
           <th className="p-3">Category</th>
-          <th className="p-3">User</th>
+          
           <th className="p-3">Date</th>
           <th className="p-3">Status</th>
-          <th className="p-3">Description</th>
+          <th className="rounded-r-lg">Description</th>
         </tr>
       </thead>
       <tbody>
@@ -59,19 +59,28 @@ const Track = () => {
               />
             </td>
             <td className="p-3">{complaint.category}</td>
-            <td className="p-3">{complaint.user}</td>
-            <td className="p-3">{calculateDaysSince(complaint.createdAt)} days ago</td>
+           
+            <td className="p-3 ">{calculateDaysSince(complaint.createdAt)} days ago</td>
             <td className="p-3">
-              <span
-                className={`px-3 py-1 rounded-full text-white text-sm ${
-                  complaint.status === 'Available' ? 'bg-green-500' : 'bg-red-500'
-                }`}
-              >
-                {complaint.status}
-              </span>
+            <span
+  className={`px-3 py-1 rounded-full text-white text-sm ${
+    complaint.status === 'Resolved'
+      ? 'bg-green-500' // Green for 'Available'
+      : complaint.status === 'Pending'
+      ? 'bg-red-500' // Yellow for 'Pending'
+      : 'bg-yellow-400' // Red for any other status (e.g., 'Resolved')
+  }`}
+>
+  {complaint.status}
+</span>
             </td>
-            <td className="p-3 h-full  flex items-center justify-center ">
-            <div className="">{complaint.description}</div>
+
+
+            <td className="">
+            
+            {complaint.description.substring(0,20)} .......
+           
+             
              
             </td>
           </tr>

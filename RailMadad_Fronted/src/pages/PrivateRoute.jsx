@@ -6,9 +6,9 @@ import { AuthContext } from '../Context/userContext.jsx';  // Import useAuth
 import Loader from '../components/Loader.jsx';
 
 const PrivateRoute = ({ children }) => {
-    const { adminData,staffData,superAdminData} = useContext(AuthContext);
+    const { adminData,staffData,superAdminData ,isLoading, setIsLoading} = useContext(AuthContext);
     const location = useLocation(); 
-  const { user,loading } = useFirebase();
+  const { user} = useFirebase();
 
 const User=user;
 
@@ -40,17 +40,24 @@ const User=user;
   }
    
   if(uii) {
-    if(loading) return <Loader/>;
+   
+    if(isLoading) return <Loader/>;
 
-    if(User)  return  children;
+    if(User) { 
+      setIsLoading(false);
+      return  children;}
   }
 
 
 
   if(isUserLoginRoute) {
-  if(loading) return <Loader/>;
-
-     if(User) return  children;
+  
+    
+  if(isLoading) return <Loader/>;
+  console.log(user);
+     if(user) {
+     
+      return  children;}
      else return  <Navigate to="/login" replace />;
     
   }

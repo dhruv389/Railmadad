@@ -1,5 +1,5 @@
-import React from 'react'
-import DetailCard3 from "../components/DetailCard3";
+import React,{useCallback} from 'react'
+import DetailCard2 from "../components/DetailCard2";
 import { Link } from "react-router-dom";
 import { useState ,useEffect,useContext} from 'react';
 import {AuthContext} from '../Context/userContext';
@@ -7,7 +7,7 @@ import {AuthContext} from '../Context/userContext';
 const PendingStaff = ({activeTab2}) => {
 
    // Get the user ID from Firebase
-
+ const [complaintd, setComplaintd] = useState(null);
   const [complaints, setComplaints] = useState([]);
   const {staffData} = useContext(AuthContext);
   
@@ -18,7 +18,11 @@ const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 
 
-const openDialog = () => setIsDialogOpen(true);
+
+const openDialog = useCallback((complaint) => {
+  setComplaintd(complaint); // Set the selected complaint
+  setIsDialogOpen(true); // Open the dialog
+}, []);
 const closeDialog = () => setIsDialogOpen(false);
 
 useEffect(() => {
@@ -32,7 +36,7 @@ useEffect(() => {
     try {
       console.log(activeTab2)
       const response = await fetch(
-        `http://localhost:5000/api/getadmincomplaints?a=Staff&b=${staffData.data.station}&s=Pending&c=${activeTab2}`
+        `http://localhost:5000/api/getadmincomplaints?a=Staff&b=${staffData.data.station}&s=In Progress&c=${activeTab2}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -79,28 +83,24 @@ if (loading1) {
    
   return (
     <table className="w-full mt-6 text-xs bg-white shadow-md rounded-lg">
-     <DetailCard3
+     <DetailCard2
         isOpen={isDialogOpen}
         onClose={closeDialog}
-        title="Success"
-        text="Your action was successful!"
-        icon="success"
+       complaint={complaintd}
       />
-    <thead>
-      <tr className="text-left bg-gray-100">
-        <th className="p-3">No.</th>
-        <th className="p-3">Complaint</th>
-        <th className="p-3">Category</th>
-        <th className="p-3">User</th>
-        <th className="p-3">Date</th>
-        {/* <th className="p-3">Pending</th> */}
-        <th className="p-3">Status</th>
-        {/* <th className="p-3">Price</th> */}
-        <th className="p-3">Actions</th>
-      </tr>
-    </thead>
+     <thead className="rounded-3xl">
+        <tr className="text-left   bg-black text-white">
+          <th className="p-3 rounded-l-xl">No.</th>
+          <th className="p-3 ">Complaint</th>
+          <th className="p-3 ">Category</th>
+          <th className="p-3 ">User</th>
+          <th className="p-3 ">Date</th>
+          <th className="p-3 ">Status</th>
+          <th className="p-3 rounded-r-xl">Actions</th>
+        </tr>
+      </thead>
     <tbody>
-      {complaints && complaints.map((complaint, index) => (
+      {complaints ? complaints.map((complaint, index) => (
                <tr
                  key={complaint._id}
                  className="border-b"
@@ -138,7 +138,11 @@ if (loading1) {
                    </Link>
                  </td>
                </tr>
-             ))}
+             )): 
+             <tr>
+          <td colSpan="6" className="p-3 py-[6rem] text-center font-medium text-base">No complaints found in {activeTab2}</td>
+        </tr>
+             }
 
 
 

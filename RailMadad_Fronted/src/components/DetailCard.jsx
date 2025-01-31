@@ -1,4 +1,6 @@
 import React from "react";
+import axios from 'axios';
+
 
 const DetailCard = ({ isOpen, onClose, complaint }) => {
   if (!isOpen) return null;
@@ -11,6 +13,52 @@ console.log(complaint);
     return differenceInDays;
   };
 
+
+
+  
+
+  const handleDelete = async (complaintId) => {
+    if (!complaintId) {
+      alert('Complaint ID is required');
+      return;
+    }
+
+    try {
+      const response = await axios.delete('http://localhost:5000/api/deleteComplaint', {
+        data: { complaintId } // Axios sends the data in the request body for DELETE requests
+      });
+
+      if (response.status === 200) {
+        alert('Complaint deleted successfully');
+        // Optionally, you can clear the input field or update the UI
+       
+      }
+    } catch (error) {
+      console.error('Error deleting complaint:', error);
+      alert('Error deleting complaint: ' + error.message);
+    }
+  };
+
+  const handleSendtoStaff = async (complaintId) => {
+    if (!complaintId) {
+      alert('Complaint ID is required');
+      return;
+    }
+  
+    try {
+      const response = await axios.post('http://localhost:5000/api/sendcomplainttostaffbyadmin', { complaintId });
+  
+      if (response.status === 200) {
+        alert('Complaint sent to staff successfully');
+        // Optionally, you can clear the input field or update the UI
+      }
+    } catch (error) {
+      console.error('Error sending complaint to staff:', error);
+      alert('Error sending complaint to staff: ' + (error.response?.data?.message || error.message));
+    }
+  };
+
+  
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="absolute inset-0 bg-black opacity-50" onClick={onClose}></div>
@@ -80,13 +128,13 @@ console.log(complaint);
                 
               </div>
             </div>
-
+ 
 
           <div className="flex mt-4 w-full space-x-2 flex-col">
            <input type="text" name="" id="" className="rounded-2xl px-7 py-2 hover:border-blue-300 hover:border-2 bg-gray-200" placeholder="Add comment" />
            <div className="w-full mt-6 flex gap-3">
-           <button className="flex-1 bg-red-500 text-white py-2 text-sm rounded-lg">Delete Complaint</button>
-           <button className="flex-1 bg-green-500 text-white py-2  text-sm  rounded-lg">Send Complaint  </button>
+           <button className="flex-1 bg-red-500 text-white py-2 text-sm rounded-lg" onClick={()=>handleDelete(complaint._id)}>Delete Complaint</button>
+           <button className="flex-1 bg-green-500 text-white py-2  text-sm  rounded-lg" onClick={()=>handleSendtoStaff(complaint._id)}>Send Complaint  </button>
            </div>
          
           </div>

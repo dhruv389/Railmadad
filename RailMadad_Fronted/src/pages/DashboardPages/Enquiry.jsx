@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios"; // Import axios for making HTTP requests
+
 import { BsStars } from "react-icons/bs";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+
 import jsonData from "../Stations.json";
 import { useFirebase } from '../../firebase/firebase.jsx';
 import { Cloudinary } from "cloudinary-core";
@@ -12,6 +11,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 function Enquiry() {
   const [selectedStation, setSelectedStation] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const [trainNo, setTrainNo] = useState("");
   const [category, setCategory] = useState("");
   const [trainClass, setTrainClass] = useState("");
@@ -40,6 +40,7 @@ function Enquiry() {
 
 
 
+ 
 
   const handleFileUpload = async (event) => {
     const files = event.target.files;
@@ -48,7 +49,7 @@ function Enquiry() {
 
 
     const genAI = new GoogleGenerativeAI("AIzaSyCZpCZCeOHtMk2s2T3_ZUuVoifq_b4dIKQ"); 
-
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
    
 
   console.log(files[0]);
@@ -56,7 +57,7 @@ function Enquiry() {
     if (files[0]) {
       console.log("*******");
       try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+      
     
         const result = await model.generateContent([
           "Identify the most relevant category for the image from: Engineering, Electrical, Traffic, Medical, Security, Sanitation, or Food Department. Respond with the category name or 'false' if no match.",
@@ -144,35 +145,43 @@ function Enquiry() {
  
   }, []);
 
-  const handleFileChange = (e) => {
-    setMediaFile(e.target.files[0]);
-  };
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-
-
+    
+    
     try {
-      const prompt = `
-        Validate the following complaint description: "${description}".
-        Check if it matches the category "${category}" or relates to train or station problems.
-        Respond with "true" if valid, or "false" if invalid.
-      `;
+      const genAI = new GoogleGenerativeAI("AIzaSyCZpCZCeOHtMk2s2T3_ZUuVoifq_b4dIKQ"); 
+      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-      const response = await genAI.generateText({
-        prompt: prompt,
-        maxTokens: 5, // Adjust as needed
-      });
-       const isvalid=response.text.trim() === 'true';
+      const prompt = `
+      Validate the following complaint description: "${description}".
+      Check if it matches the category "${category}" or relates to train or station problems.
+      Respond with "true" if valid, or "false" if invalid.
+    `;
+
+      // Send the prompt to the Gemini API
+      const result = await model.generateContent(prompt);
+  
+      // Extract the response text
+      const response = await result.response;
+      const text = response.text().trim(); // Get the text from the response
+  
+      // Log the response
+      console.log("Prompt:", prompt);
+      console.log("Response:", text);
+  
+      //response.text.trim() === 'true'
+       const isvalid= text==="true";
       if (isvalid) {
         const complaintData = {
       userId: firebase.useruid, // Replace with actual user ID
-      category,
+      category: category+" Department",
       description,
       media: mediaUrls,
       typeOfComplaint,
-      stationName: selectedStation,
+      stationName: inputValue,
       pnrNumber: trainNo ,
       TrainClass:trainClass,
     };
@@ -217,7 +226,7 @@ function Enquiry() {
   };
 
 
-  const [inputValue, setInputValue] = useState("");
+
     const [suggestions, setSuggestions] = useState([]);
   
     const handleInputChange2 = (e) => {
@@ -253,24 +262,47 @@ function Enquiry() {
 
         <div className="mt-6 text-sm font-semibold flex justify-start flex-col gap-1">
           <p>Type Of Complaint:</p>
-          <div className="flex font-semibold border py-4 px-6 rounded-xl justify-start">
-            <p>Train</p>
-            <input
-              type="radio"
-              name="typeOfComplaint"
-              value="Train"
-              checked={typeOfComplaint === "Train"}
-              onChange={() => setTypeOfComplaint("Train")}
-            />
-            <p className="ml-9">Station</p>
-            <input
-              type="radio"
-              name="typeOfComplaint"
-              value="Station"
-              checked={typeOfComplaint === "Station"}
-              onChange={() => setTypeOfComplaint("Station")}
-            />
-          </div>
+          <div className="flex items-center bg-white/90 backdrop-blur-lg  border border-gray-300 px-6 py-4 rounded-xl space-x-8">
+      {/* Train Option */}
+      <label className="flex items-center space-x-2 cursor-pointer text-gray-700 font-medium hover:scale-105 transition duration-300">
+        <input
+          type="radio"
+          name="typeOfComplaint"
+          value="Train"
+          checked={typeOfComplaint === "Train"}
+          onChange={() => setTypeOfComplaint("Train")}
+          className="hidden"
+        />
+        <div
+          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+            typeOfComplaint === "Train" ? "border-blue-500" : "border-gray-400"
+          }`}
+        >
+          {typeOfComplaint === "Train" && <div className="w-3 h-3 bg-blue-500 rounded-full"></div>}
+        </div>
+        <p>🚆 Train</p>
+      </label>
+
+      {/* Station Option */}
+      <label className="flex items-center space-x-2 cursor-pointer text-gray-700 font-medium hover:scale-105 transition duration-300">
+        <input
+          type="radio"
+          name="typeOfComplaint"
+          value="Station"
+          checked={typeOfComplaint === "Station"}
+          onChange={() => setTypeOfComplaint("Station")}
+          className="hidden"
+        />
+        <div
+          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+            typeOfComplaint === "Station" ? "border-green-500" : "border-gray-400"
+          }`}
+        >
+          {typeOfComplaint === "Station" && <div className="w-3 h-3 bg-green-500 rounded-full"></div>}
+        </div>
+        <p>🏢 Station</p>
+      </label>
+    </div>
         </div>
 
         {typeOfComplaint === "Station" ? (

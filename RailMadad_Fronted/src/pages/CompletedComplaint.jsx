@@ -3,6 +3,7 @@ import DetailCard from "../components/DetailCard";
 import { Link } from "react-router-dom";
 import { useFirebase } from "../firebase/firebase";
 import {AuthContext } from '../Context/userContext'
+import DetailCard3 from "../components/DetailCard3";
 
 const CompletedComplaint = ({activeTab2}) => {
   const { useruid } = useFirebase(); // Get the user ID from Firebase
@@ -74,19 +75,19 @@ if (loading1) {
 
   return (
     <table className="w-full mt-6 text-xs bg-white shadow-md h-auto rounded-lg">
-      <thead>
-        <tr className="text-left bg-gray-100">
-          <th className="p-3">No.</th>
-          <th className="p-3">Complaint</th>
-          <th className="p-3">Category</th>
-          <th className="p-3">User</th>
-          <th className="p-3">Date</th>
-          <th className="p-3">Status</th>
-          <th className="p-3">Actions</th>
+       <thead className="rounded-3xl">
+        <tr className="text-left   bg-black text-white">
+          <th className="p-3 rounded-l-xl">No.</th>
+          <th className="p-3 ">Complaint</th>
+          <th className="p-3 ">Category</th>
+          <th className="p-3 ">User</th>
+          <th className="p-3 ">Date</th>
+          <th className="p-3 ">Status</th>
+          <th className="p-3 rounded-r-xl">Actions</th>
         </tr>
       </thead>
       <tbody>
-        {complaints && complaints.map((complaint, index) => (
+        {complaints ? complaints.map((complaint, index) => (
           <tr
             key={complaint._id}
             className="border-b"
@@ -107,9 +108,7 @@ if (loading1) {
             </td>
             <td className="p-3">
               <span
-                className={`px-3 py-1 rounded-full text-white text-sm ${
-                  complaint.status === "Available" ? "bg-green-500" : "bg-red-500"
-                }`}
+                className={`px-3 py-1 rounded-full text-white text-sm bg-green-500`}
               >
                 {complaint.status}
               </span>
@@ -117,24 +116,23 @@ if (loading1) {
             <td className="p-3 flex items-center justify-start gap-2">
               <Link
                 to="#"
-                className="px-2 py-1 mb-6 rounded-full text-white text-sm bg-red-500"
+                className="px-2 py-1 mb-6 rounded-full text-white text-sm bg-blue-500"
               >
-                Delete
+               Done
               </Link>
-              <Link
-                to="#"
-                className="bg-purple-700 mb-6 text-sm px-2 py-1 rounded-full text-white"
-              >
-                Send
-              </Link>
+            
             </td>
           </tr>
-        ))}
+        )) :
+        <tr>
+          <td colSpan="6" className="p-3 py-[6rem] text-center font-medium text-base">No complaints found in {activeTab2}</td>
+        </tr>
+        }
       </tbody>
 
       {/* Detail Card Modal */}
       {isDialogOpen && (
-        <DetailCard
+        <DetailCard3
           isOpen={isDialogOpen}
           onClose={closeDialog}
           complaint={complaintd}

@@ -6,7 +6,7 @@ import i2 from "../Images/download (1).png"
 import i3 from "../Images/download (2).png"
 
 import { getAuth, onAuthStateChanged } from "firebase/auth"
-import { Tilt } from '@jdion/tilt-react'
+
 
 
 
@@ -54,29 +54,31 @@ const Home = () => {
 	return (
 
 		<div className={`flex min-h-[80vh] flex-col w-screen justify-center items-center `}>
+<div className="flex flex-col items-center justify-center w-full min-h-[80vh] px-6 md:px-12 text-center">
+      
+      {/* Hero Title */}
+      <h1 className="text-[4rem] animate-fadeIn md:text-6xl font-bold leading-tight max-w-[70vw]">
+        Welcome to <span className="text-yellow-400">Rail Madad</span>  
+        <br />
+        Your <span className="text-yellow-400">Trusted</span> Railway  
+        <span className="text-yellow-400"> Assistance</span> Platform
+      </h1>
 
-			<div className="flex min-h-[75vh] px-[4rem] gap-4  w-screen  justify-around items-center ">
-				<div className="w-[45%] custom:pb-2 gap-3 custom:w-[100%] custom:text-center custom:items-center  custom:mt-0  h-[100%]  flex items-start justify-start flex-col">
-				
-						<h1 className='text-[3rem] custom:text-[1.7rem]  font-normal text-start  cursor-pointer '>Welcome to <span className='text-yellow-400'>Rail Madad</span> : Your <span className='text-yellow-400'>Trusted</span>  Platform for Resolving <span className='text-yellow-400'>Railway</span>  Concerns</h1>
-					<p className='text-start text-gray-800 custom:text-sm w-[80%]'>Whether it's issues with tickets, food, cleanliness, or any other railway-related problems, we&apos;re here to help you find swift solutions and ensure a better travel experience.</p>
+      {/* Hero Description */}
+      <p className="text-gray-600 animate-slideIn text-lg md:text-xl mt-4 max-w-2xl">
+        Facing issues with railway services? From tickets to cleanliness,  
+        we ensure a **fast and hassle-free complaint resolution** for  
+        a better travel experience.
+      </p>
 
-					{/* <Link to="/dashboard" className='w-[70%] bg-black rounded-xl flex justify-center items-center mt-8 text-white h-[3rem]'>
-				<Tilt > Get started
- </Tilt>
-			 </Link> */}
+      {/* CTA Button */}
+      <div className="mt-6">
+        <button className="bg-black text-white px-6 py-3 rounded-full text-lg hover:bg-gray-800 transition-transform transform hover:scale-105">
+          Get Started
+        </button>
+      </div>
 
-				</div>
-
-
-				<div className="w-[40%]  bg-yellow-300 custom:mt-[0rem] custom:w-[100%] rounded-bl-[5rem]  rounded-tr-[5rem] flex justify-center items-center  h-[25rem]">
-				
-				<img src={train} alt="" className=' rounded-full  object-contain' />
-			</div>
-
-
-			</div>
-
+    </div>
 
 
 
@@ -165,7 +167,7 @@ const Home = () => {
 			<div className="mt-20">
 				<h1 className='text-[2rem] md:text-center md:text-[1.2rem] font-bold'> <span className='text-yellow-400'>Explore Categories :</span> Support for All Railway Concerns</h1>
 			</div>
-			<div className=" bg-slate-50 py-10  md:h-auto items-center md:flex-col w-full flex justify-center gap-10 h-[27rem] mt-8 ">
+			<div className=" bg-black text-white py-10  md:h-auto items-center md:flex-col w-full flex justify-center gap-10 h-[27rem] mt-8 ">
 				<div className="rounded-[20px] md:w-[90%] w-[35%] h-[95%] ">
 					<img src="https://images.alphacoders.com/130/thumb-1920-1309691.jpg" className='object-cover rounded-[20px] w-full h-full ' />
 				</div>

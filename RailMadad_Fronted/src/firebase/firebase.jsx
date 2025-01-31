@@ -3,6 +3,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect, useContext, createContext } from "react";
+import { AuthContext } from '../Context/userContext.jsx';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -25,6 +26,7 @@ export const useFirebase = () => useContext(FirebaseContext);
 
 // Firebase Provider component
 export const FirebaseProvider = ({ children }) => {
+  const { isLoading, setIsLoading} = useContext(AuthContext);
   const [user, setUser] = useState(null);
   const [useruid, setuseruid] = useState("");
 
@@ -44,6 +46,7 @@ export const FirebaseProvider = ({ children }) => {
   }, []);
 
   const isLoggedin = !!user;
+  if(user) setIsLoading(false);
 
   return (
     <FirebaseContext.Provider value={{ isLoggedin,app,auth, user, useruid }}>

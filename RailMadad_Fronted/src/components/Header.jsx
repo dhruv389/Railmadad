@@ -59,7 +59,7 @@ const firebase = useFirebase();
     </Link>
           
             <div className="  flex justify-start items-center custom:ml-2 custom:flex custom:justify-center custom:items-center w-full">
-                <h1 className=" text-yellow-300 font-medium text-[2.5rem] custom:text-[2rem]">RailMadad</h1>
+                <h1 className=" text-black font-semibold text-[2.5rem] custom:text-[2rem]">RailMadad</h1>
                
             </div>
             </div>
@@ -76,7 +76,7 @@ const firebase = useFirebase();
             {
               !firebase.isLoggedin  && ( <div className="btns h-full  custom:hidden  flex gap-10 justify-end ">
                
-               <Link to="/login"><button className="login-btn" type="submit">Login</button></Link>
+               <Link to="/login"><button className="bg-black py-2 text-sm gap-2 hover:bg-yellow-400 px-2 rounded-lg text-white flex justify-between items-center " type="submit">Login</button></Link>
                <Link to="/signup"> <button className="bg-black py-2 text-sm gap-2 hover:bg-yellow-400 px-2 rounded-lg text-white flex justify-between items-center " type="submit">Sign Up</button>  </Link>  
             </div>)
             }

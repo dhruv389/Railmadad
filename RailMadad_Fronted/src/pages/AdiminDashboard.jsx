@@ -10,6 +10,13 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { HiBell } from "react-icons/hi";
 
 
+const NavItem = ({ icon, label }) => (
+  <div className="flex items-center gap-3 px-4 py-2 text-black hover:bg-gray-900 hover:text-white rounded-lg transition cursor-pointer">
+    {icon}
+    <span className="text-sm font-medium">{label}</span>
+  </div>
+);
+
 const AdminDashboard = () => {
 
      const options = [
@@ -31,34 +38,35 @@ const AdminDashboard = () => {
     <div className="flex min-h-screen ">
       {/* Sidebar */}
      
-      <aside className="w-1/6 bg-gray-100 flex  flex-col justify-between h-screen items-center  p-4">
-       <div className="flex h-[80%] w-full gap-6 flex-col">
-        <div className="h-[20%] flex flex-col justify-center items-center bg-white rounded-3xl t gap-1">
-        <div className=" flex justify-center gap-4 items-center w-full  ">
-            <img src="https://qph.cf2.quoracdn.net/main-qimg-d3a37d54d57b63a39d3a29f8cc3ab80f" alt=""  className="rounded-full w-[30%] h-[80%] object-contain "/>
-            <p className="font-bold">Rail Madad</p>
-        </div>
-        <div className="border rounded-full  p-1 mb-1">  <p className="font-bold ">Admin Dashboard</p> </div>
-        </div>
+      <aside className="w-64 shadow-xl bg-white rounded-r-[2rem] flex  flex-col justify-between h-[76vh] mt-[4rem] p-5 ">
+      {/* Logo & Admin Section */}
+      <div className="flex flex-col mt-[2rem] items-center gap-3">
+       
+        <h2 className="text-lg font-bold text-black">Rail Madad</h2>
+        <span className="text-sm font-semibold bg-black text-white px-3 py-1 rounded-full">
+          Admin Dashboard
+        </span>
+      </div>
 
-        <div className="flex bg-white rounded-3xl h-[70%] flex-col  pl-3 pt-14 gap-3 justify-start items-start">
-            <div className="flex gap-3 items-center justify-center"> <LuHome/>  <p>Home</p> </div>
-            <div className="flex gap-3 items-center justify-center"><BiCategoryAlt/>  <p>Anlalytics</p> </div>
-            <div className="flex gap-3 items-center justify-center"><CiSettings/>  <p>Setting</p> </div>
-            <div className="flex gap-3 items-center justify-center"> <HiBell/> <p>Notifications</p> </div>
-        </div>
-       </div>
-       <div className="flex justify-around w-full px-2 h-[5rem] bg-white rounded-3xl items-center">
-  <img src="https://m.media-amazon.com/images/M/MV5BYzI1MTM4Y2MtZmMzNC00MWY1LTk3MWEtOGU2NGEwY2QwYjJjXkEyXkFqcGc@._V1_.jpg" alt="" className="w-[20%] h-[60%] rounded-full mr-4" />
-  <div className="flex flex-col w-[70%] gap-1 text-sm">
-   
-    <p>Dhaval  Rathod</p>
-    <p className="text-gray-300">Admin</p>
-  </div>
-  <div ><HiOutlineLogout size={"25px"}/></div>
-       </div>
+      {/* Navigation Menu */}
+      <div className=" h-[60%] ">
+      <img src="https://thumbs.dreamstime.com/b/d-illustration-happy-smiling-businessman-suit-laptop-sitting-armchair-showing-ok-gesture-cartoon-bearded-man-202447055.jpg" className="h-full object-cover" alt="" />
+      </div>
 
-      </aside>
+      {/* User Profile */}
+      <div className="flex items-center bg-white p-3 rounded-xl shadow-md">
+        <img
+          src="https://m.media-amazon.com/images/M/MV5BYzI1MTM4Y2MtZmMzNC00MWY1LTk3MWEtOGU2NGEwY2QwYjJjXkEyXkFqcGc@._V1_.jpg"
+          alt="Dhaval Rathod"
+          className="w-12 h-12 rounded-full object-cover"
+        />
+        <div className="ml-3">
+          <p className="text-sm font-medium">Dhaval Rathod</p>
+          <p className="text-xs text-gray-500">Admin</p>
+        </div>
+        <HiOutlineLogout size={22} className="ml-auto text-gray-600 cursor-pointer hover:text-red-500" />
+      </div>
+    </aside>
 
       {/* Main Content */}
   
@@ -75,13 +83,13 @@ const AdminDashboard = () => {
    
   <div className="flex space-x-2 bg-white shadow-md rounded-full p-1">
     <div
-      className={`px-4 py-2 rounded-full cursor-pointer ${activeTab === 'Pending' ? 'bg-blue-100 text-blue-600' : 'text-gray-700'}`}
+      className={`px-4 py-2 rounded-full cursor-pointer ${activeTab === 'Pending' ? 'bg-black text-white' : 'text-gray-700'}`}
       onClick={() => setActiveTab('Pending')}
     >
       Pending <span className="ml-1 bg-gray-200 text-gray-600 text-xs rounded-full px-2 py-1">202</span>
     </div>
     <div
-      className={`px-4 py-2 rounded-full cursor-pointer ${activeTab === 'Completed' ? 'bg-blue-100 text-blue-600' : 'text-gray-700'}`}
+      className={`px-4 py-2 rounded-full cursor-pointer ${activeTab === 'Completed' ? 'bg-black text-white' : 'text-gray-700'}`}
       onClick={() => setActiveTab('Completed')}
     >
      Completed

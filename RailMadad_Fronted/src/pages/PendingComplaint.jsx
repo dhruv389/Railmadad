@@ -57,6 +57,11 @@ if (loading1) {
 }
 
 
+
+
+
+
+
   // Calculate days since the complaint was created
   const calculateDaysSince = (date) => {
     const createdAtDate = new Date(date);
@@ -82,7 +87,7 @@ if (loading1) {
         </tr>
       </thead>
       <tbody>
-        {complaints && complaints.map((complaint, index) => (
+        {complaints ? complaints.map((complaint, index) => (
           <tr
             key={complaint._id}
             className="border-b"
@@ -125,7 +130,10 @@ if (loading1) {
               </Link>
             </td>
           </tr>
-        ))}
+        )) : <tr>
+          <td colSpan="6" className="p-3 py-[6rem] text-center font-medium text-base">No complaints found in {activeTab2}</td>
+        </tr>
+        }
       </tbody>
 
       {/* Detail Card Modal */}
