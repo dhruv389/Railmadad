@@ -1,15 +1,10 @@
-import React  , {useState} from "react";
-import { Link } from "react-router-dom";
-import DetailCard from "../components/DetailCard";
-import CompletedStaff from "./CompletedStaff";
+import React  , {useState,useContext} from "react";
 
+import CompletedStaff from "./CompletedStaff";
+import { AuthContext } from "../Context/userContext";
 import PendingStaff from "./PendingStaff";
 import { HiOutlineLogout } from "react-icons/hi";
-import { LuHome } from "react-icons/lu";
-import { CiSettings } from "react-icons/ci";
-import { BiCategoryAlt } from "react-icons/bi";
-import { HiBell } from "react-icons/hi";
-
+import { Link } from "react-router-dom";
 
 
 
@@ -25,7 +20,7 @@ const StaffDashboard = () => {
     'Food Department',
   ];
 
-
+const {adminData}=useContext(AuthContext);
       const [activeTab2, setActiveTab2] = useState(options[0]);
   
   const [activeTab, setActiveTab] = useState('Pending');
@@ -34,14 +29,21 @@ const StaffDashboard = () => {
     <div className="flex h-screen">
       {/* Sidebar */}
      
-      <aside className="w-64 shadow-xl bg-white rounded-r-[2rem] flex  flex-col justify-between h-[76vh] mt-[4rem] p-5 ">
+      <aside className="w-64 border-2 border-gray-200 shadow-xl bg-white rounded-r-[2rem] flex items-center  flex-col justify-between h-[89vh] mt-[1rem] p-5 ">
             {/* Logo & Admin Section */}
+             <Link to="/" className="smj-icon bg-yellow-300 rounded-full  h-[3rem]   w-[5rem]" >
+                 <img className="h-full  w-full object-contain " src="https://img.freepik.com/free-vector/front-diesel-locomotive-cartoon-style_1308-89378.jpg?t=st=1738393636~exp=1738397236~hmac=8f78d5d66a17eb5919217bf6f1994d04f00deaf7327d8e872cda1d58ab563373&w=360" alt=""/>
+                 </Link>
             <div className="flex flex-col mt-[2rem] items-center gap-3">
              
               <h2 className="text-lg font-bold text-black">Rail Madad</h2>
               <span className="text-sm font-semibold bg-black text-white px-3 py-1 rounded-full">
-                Staff Dashboard
+              📌  Staff Dashboard
               </span>
+              <h2 className="text-sm font-semibold bg-black text-white px-3 py-1 rounded-full">
+  🗺️  {adminData.data.station}
+
+              </h2>
             </div>
       
             {/* Navigation Menu */}
@@ -50,7 +52,7 @@ const StaffDashboard = () => {
             </div>
       
             {/* User Profile */}
-            <div className="flex items-center bg-white p-3 rounded-xl shadow-md">
+            <div className="flex items-center bg-black text-white p-3 rounded-xl shadow-md">
               <img
                 src="https://m.media-amazon.com/images/M/MV5BYzI1MTM4Y2MtZmMzNC00MWY1LTk3MWEtOGU2NGEwY2QwYjJjXkEyXkFqcGc@._V1_.jpg"
                 alt="Dhaval Rathod"
@@ -71,7 +73,7 @@ const StaffDashboard = () => {
       <div className="flex-grow w-[80vw]   bg-gray-50 p-6">
     <div className="flex justify-between items-center">
     {
-  activeTab === 'Pending'? <h1 className="text-2xl font-bold">Pending Comlpaints List</h1>  : <h1 className="text-2xl font-bold">Completed Comlpaints List</h1>
+  activeTab === 'Pending'? <h1 className="text-2xl font-semibold">Pending Comlpaints List</h1>  : <h1 className="text-2xl font-bold">Completed Comlpaints List</h1>
 
     }
       
@@ -116,7 +118,7 @@ const StaffDashboard = () => {
           <div
             key={option}
             className={`px-4 py-2 shadow-sm bg-white rounded-full text-sm cursor-pointer whitespace-nowrap ${
-              activeTab2 === option ? 'bg-gray-900 text-white' : 'text-gray-700'
+              activeTab2 === option ? 'bg-gray-900 text-black' : 'text-gray-700'
             }`}
             onClick={() => setActiveTab2(option)}
           >

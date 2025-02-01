@@ -1,24 +1,13 @@
-import React  , {useState} from "react";
-import { Link } from "react-router-dom";
-import DetailCard from "../components/DetailCard";
+import React  , {useState,useContext} from "react";
+import { AuthContext } from "../Context/userContext";
 import CompletedComplaint from "./CompletedComplaint";
 import PendingComplaint from "./PendingComplaint";
 import { HiOutlineLogout } from "react-icons/hi";
-import { LuHome } from "react-icons/lu";
-import { CiSettings } from "react-icons/ci";
-import { BiCategoryAlt } from "react-icons/bi";
-import { HiBell } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
-
-const NavItem = ({ icon, label }) => (
-  <div className="flex items-center gap-3 px-4 py-2 text-black hover:bg-gray-900 hover:text-white rounded-lg transition cursor-pointer">
-    {icon}
-    <span className="text-sm font-medium">{label}</span>
-  </div>
-);
 
 const AdminDashboard = () => {
-
+ const {logoutAdmin,adminData}=useContext(AuthContext);
      const options = [
       'Engineering Department',
       'Electrical Department',
@@ -38,14 +27,19 @@ const AdminDashboard = () => {
     <div className="flex min-h-screen ">
       {/* Sidebar */}
      
-      <aside className="w-64 shadow-xl bg-white rounded-r-[2rem] flex  flex-col justify-between h-[76vh] mt-[4rem] p-5 ">
+      <aside className="w-64 border-2 border-gray-200 shadow-xl bg-white rounded-r-[2rem] flex items-center  flex-col justify-between h-[89vh] mt-[1rem] p-5 ">
       {/* Logo & Admin Section */}
+       <Link to="/" className="smj-icon bg-yellow-300 rounded-full  h-[3rem]   w-[5rem]" >
+           <img className="h-full  w-full object-contain " src="https://img.freepik.com/free-vector/front-diesel-locomotive-cartoon-style_1308-89378.jpg?t=st=1738393636~exp=1738397236~hmac=8f78d5d66a17eb5919217bf6f1994d04f00deaf7327d8e872cda1d58ab563373&w=360" alt=""/>
+           </Link>
       <div className="flex flex-col mt-[2rem] items-center gap-3">
-       
         <h2 className="text-lg font-bold text-black">Rail Madad</h2>
         <span className="text-sm font-semibold bg-black text-white px-3 py-1 rounded-full">
-          Admin Dashboard
+         👨‍💼 Admin Dashboard
         </span>
+        <h2 className="text-sm font-semibold bg-black text-white px-3 py-1 rounded-full">
+         🗺️ {adminData.data.station}
+        </h2>
       </div>
 
       {/* Navigation Menu */}
@@ -54,16 +48,16 @@ const AdminDashboard = () => {
       </div>
 
       {/* User Profile */}
-      <div className="flex items-center bg-white p-3 rounded-xl shadow-md">
+      <div className="flex items-center text-white p-3 rounded-xl hover:shadow-md bg-black ">
         <img
           src="https://m.media-amazon.com/images/M/MV5BYzI1MTM4Y2MtZmMzNC00MWY1LTk3MWEtOGU2NGEwY2QwYjJjXkEyXkFqcGc@._V1_.jpg"
           alt="Dhaval Rathod"
           className="w-12 h-12 rounded-full object-cover"
         />
-        <div className="ml-3">
+        <button className="ml-3 " onClick={()=>logoutAdmin()} >
           <p className="text-sm font-medium">Dhaval Rathod</p>
           <p className="text-xs text-gray-500">Admin</p>
-        </div>
+        </button>
         <HiOutlineLogout size={22} className="ml-auto text-gray-600 cursor-pointer hover:text-red-500" />
       </div>
     </aside>
@@ -119,7 +113,7 @@ const AdminDashboard = () => {
         {options.map((option) => (
           <div
             key={option}
-            className={`px-4 py-2 shadow-sm bg-white rounded-full text-sm cursor-pointer whitespace-nowrap ${
+            className={`px-4 border-2 border-gray-50 py-2 shadow-sm bg-white rounded-full text-sm cursor-pointer whitespace-nowrap ${
               activeTab2 === option ? 'bg-blue-100 text-blue-600' : 'text-gray-700'
             }`}
             onClick={() => setActiveTab2(option)}

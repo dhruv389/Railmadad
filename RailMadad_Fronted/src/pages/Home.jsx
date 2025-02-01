@@ -54,8 +54,23 @@ const Home = () => {
 	return (
 
 		<div className={`flex min-h-[80vh] flex-col w-screen justify-center items-center `}>
+
+
+
+
+
+
+
 <div className="flex flex-col items-center justify-center w-full min-h-[80vh] px-6 md:px-12 text-center">
-      
+<div className="ripple-background  -z-20  relative bottom-[9rem]">
+      <div className="circle xxlarge shade1"></div>
+      <div className="circle xlarge shade2"></div>
+      <div className="circle large shade3"></div>
+      <div className="circle medium shade4"></div>
+      <div className="circle small shade5"></div>
+    </div>
+        
+   
       {/* Hero Title */}
       <h1 className="text-[4rem] animate-fadeIn md:text-6xl font-bold leading-tight max-w-[70vw]">
         Welcome to <span className="text-yellow-400">Rail Madad</span>  
@@ -65,7 +80,7 @@ const Home = () => {
       </h1>
 
       {/* Hero Description */}
-      <p className="text-gray-600 animate-slideIn text-lg md:text-xl mt-4 max-w-2xl">
+      <p className="text-gray-600 animate-slideIn text-md md:text-xl mt-4 max-w-2xl">
         Facing issues with railway services? From tickets to cleanliness,  
         we ensure a **fast and hassle-free complaint resolution** for  
         a better travel experience.
@@ -167,7 +182,7 @@ const Home = () => {
 			<div className="mt-20">
 				<h1 className='text-[2rem] md:text-center md:text-[1.2rem] font-bold'> <span className='text-yellow-400'>Explore Categories :</span> Support for All Railway Concerns</h1>
 			</div>
-			<div className=" bg-black text-white py-10  md:h-auto items-center md:flex-col w-full flex justify-center gap-10 h-[27rem] mt-8 ">
+			<div className=" bg-white py-10  md:h-auto items-center md:flex-col w-full flex justify-center gap-10 h-[27rem] mt-8 ">
 				<div className="rounded-[20px] md:w-[90%] w-[35%] h-[95%] ">
 					<img src="https://images.alphacoders.com/130/thumb-1920-1309691.jpg" className='object-cover rounded-[20px] w-full h-full ' />
 				</div>

@@ -119,10 +119,7 @@ html {
   font-size: 17px;
 }
 
-.login-btn:hover {
-  background-color: rgb(115, 39, 39);
-  color: white;
-}
+
 
 
 @keyframes fadeIn {
@@ -153,23 +150,6 @@ html {
   animation: slideIn 1s ease-in-out;
 }
 
-@keyframes moveTracks {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 100% 0;
-  }
-}
-
-@keyframes moveTrain {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
 
 .animate-moveTracks {
   animation: moveTracks 10s linear infinite;
@@ -213,4 +193,102 @@ html {
   padding: 20px;
   border-radius: 5px;
   transition: transform 0.1s ease-in-out;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.circle{
+  position: absolute;
+  border-radius: 50%;
+  
+ 
+  animation: ripple 15s infinite;
+  /* box-shadow: 0px 0px 1px 0px #508fb9; */
+
+
+
+ 
+background: white;
+box-shadow:  6px 6px 10px #d7d7d3,
+             -6px -6px 10px #ededed;
+
+             box-shadow:  6px 6px 10px #fddf47b7,
+             -6px -6px 10px #ededed;
+}
+
+.small{
+  width: 500px;
+  height: 500px;
+  left: -250px;
+  bottom: -250px;
+}
+
+.medium{
+  width: 700px;
+  height: 700px;
+  left: -350px;
+  bottom: -350px;
+}
+
+.large{
+  width: 900px;
+  height: 900px;
+  left: -450px;
+  bottom: -450px;
+}
+
+.xlarge{
+  width: 800px;
+  height: 800px;
+  left: -400px;
+  bottom: -400px;
+}
+
+.xxlarge{
+  width: 1000px;
+  height: 1000px;
+  left: -500px;
+  bottom: -500px;
+}
+
+.shade1{
+  opacity: 0.2;
+}
+.shade2{
+  opacity: 0.5;
+}
+
+.shade3{
+  opacity: 0.7;
+}
+
+.shade4{
+  opacity: 0.8;
+}
+
+.shade5{
+  opacity: 0.9;
+}
+
+@keyframes ripple{
+  0%{
+    transform: scale(1);
+  }
+  
+  50%{
+    transform: scale(1.2);
+  }
+  
+  100%{
+    transform: scale(1);
+  }
 }
