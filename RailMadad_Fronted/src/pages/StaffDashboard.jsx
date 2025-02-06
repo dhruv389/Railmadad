@@ -31,9 +31,7 @@ const {adminData}=useContext(AuthContext);
      
       <aside className="w-64 border-2 border-gray-200 shadow-xl bg-white rounded-r-[2rem] flex items-center  flex-col justify-between h-[89vh] mt-[1rem] p-5 ">
             {/* Logo & Admin Section */}
-             <Link to="/" className="smj-icon bg-yellow-300 rounded-full  h-[3rem]   w-[5rem]" >
-                 <img className="h-full  w-full object-contain " src="https://img.freepik.com/free-vector/front-diesel-locomotive-cartoon-style_1308-89378.jpg?t=st=1738393636~exp=1738397236~hmac=8f78d5d66a17eb5919217bf6f1994d04f00deaf7327d8e872cda1d58ab563373&w=360" alt=""/>
-                 </Link>
+            
             <div className="flex flex-col mt-[2rem] items-center gap-3">
              
               <h2 className="text-lg font-bold text-black">Rail Madad</h2>
@@ -47,8 +45,8 @@ const {adminData}=useContext(AuthContext);
             </div>
       
             {/* Navigation Menu */}
-            <div className=" h-[60%] ">
-            <img src="https://t3.ftcdn.net/jpg/03/09/43/52/360_F_309435268_05EROz79YXY7pIQWAXYTtSKlrUXPHKI7.jpg" className="h-full object-cover rounded-[1rem]" alt="" />
+            <div className=" h-[60%] pr-3 ">
+            <img src="https://t3.ftcdn.net/jpg/03/09/43/52/360_F_309435268_05EROz79YXY7pIQWAXYTtSKlrUXPHKI7.jpg" className="h-full object-cover rounded-[1rem] ml-5" alt="" />
             </div>
       
             {/* User Profile */}

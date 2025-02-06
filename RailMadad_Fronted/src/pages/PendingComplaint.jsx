@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback , useContext } from "react";
 import DetailCard from "../components/DetailCard";
 import { Link } from "react-router-dom";
+import Loader from "../components/Loader";
 
 import {AuthContext } from '../Context/userContext'
 
@@ -53,7 +54,7 @@ useEffect(() => {
 }, [activeTab2]); // Dependency on adminData.station instead of adminData
 
 if (loading1) {
-  return <div>Loading...</div>; // Show a loading indicator while fetching data
+  return <Loader/>; // Show a loading indicator while fetching data
 }
 
 

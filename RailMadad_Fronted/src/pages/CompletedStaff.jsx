@@ -1,9 +1,10 @@
-import React from 'react'
+/* eslint-disable react/prop-types */
+
 import DetailCard3 from "../components/DetailCard3";
-import DetailCard2 from '../components/DetailCard2';
 import { Link } from "react-router-dom";
 import { useState ,useEffect,useContext,useCallback} from 'react';
 import {AuthContext} from '../Context/userContext';
+import Loader from "../components/Loader";
 
 const PendingComplaint = ({activeTab2}) => {
 
@@ -56,7 +57,7 @@ const [complaints, setComplaints] = useState([]);
     }, [activeTab2]); // Dependency on staffData.station instead of staffData
     
     if (loading1) {
-      return <div>Loading...</div>; // Show a loading indicator while fetching data
+      return <Loader/>; // Show a loading indicator while fetching data
     }
 
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 
 import { BsStars } from "react-icons/bs";
 
@@ -10,7 +10,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 
 function Enquiry() {
-  const [selectedStation, setSelectedStation] = useState("");
+ 
   const [inputValue, setInputValue] = useState("");
   const [trainNo, setTrainNo] = useState("");
   const [category, setCategory] = useState("");
@@ -18,9 +18,9 @@ function Enquiry() {
   const [description, setDescription] = useState("");
   const [mediaUrls, setMediaUrls] = useState([]);
   const [typeOfComplaint, setTypeOfComplaint] = useState("Train"); // Default value
-  const [filteredNames, setFilteredNames] = useState([]);
+  
   const firebase = useFirebase();
-  const [uidd, setuidd] = useState("");
+ 
   const[image,setImage]=useState(null);
   //******************************************************************************* */
 
@@ -149,16 +149,63 @@ function Enquiry() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
-    
-    try {
+   
+    const fields = [
+     
+      { name: 'Description', value: description },
+      { name: 'Image', value: mediaUrls },
+      { name: 'typeOfComplaint', value: typeOfComplaint },
+      { name: 'Station name', value: inputValue },
+      { name: 'train no', value: trainNo },
+      { name: 'train Class', value: trainClass },
+    ];
+
+
+
+    const emptyFields = fields.filter((field) => {
+      if (Array.isArray(field.value)) {
+        return field.value.length === 0; // Check if array is empty (e.g., mediaUrls)
+      }
+      return field.value.trim() === ''; // Check if string is empty
+    });
+
+
+
+    if (emptyFields.length > 0) {
+      const fieldsArray = emptyFields.map((field) => field.name);
+
+Swal.fire({
+  icon: "error",
+  title: "<span style='color: #e74c3c; font-weight: bold;'>Oops...</span>",
+  html: `
+    <p style="font-size: 18px; font-weight: 500; color: #333;">⚠️The following fields are empty:</p>
+    <ul style="font-size: 16px; display :flex; flex-wrap:wrap; gap:8px; justify-content:center; font-weight: 500; line-height: 1.5; padding: 0;">
+      ${fieldsArray
+        .map(
+          (field, id) =>
+            `<li style="background-color:black; color:white; border-radius:20px; padding-left:9px; padding-right:9px; margin-bottom:2px;" key=${id}> ${field}</li>`
+        )
+        .join("")}
+    </ul>
+    <p style="margin-top: 10px; color: #555;">Please fill them out to proceed.</p>
+  `,
+  confirmButtonText: "Fill Now",
+  confirmButtonColor: "#e74c3c",
+  background: "#fff",
+  width: "450px",
+  customClass: {
+    popup: "modern-alert",
+  },
+});
+
+
+    } else {
+      try {
       const genAI = new GoogleGenerativeAI("AIzaSyCZpCZCeOHtMk2s2T3_ZUuVoifq_b4dIKQ"); 
       const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
       const prompt = `
-      Validate the following complaint description: "${description}".
-      Check if it matches the category "${category}" or relates to train or station problems.
-      Respond with "true" if valid, or "false" if invalid.
+      Validate the following complaint description: '${description}'. Focus on understanding the issue rather than spelling errors. Check if it relates to trains, stations, railways, personal issues, health, harassment, cleanliness, or damages. Respond with 'true' if valid; if invalid, reply answer of the question of '${description}''
     `;
 
       // Send the prompt to the Gemini API
@@ -175,13 +222,14 @@ function Enquiry() {
       //response.text.trim() === 'true'
        const isvalid= text==="true";
       if (isvalid) {
+        console.log(inputValue);
         const complaintData = {
       userId: firebase.useruid, // Replace with actual user ID
       category: category+" Department",
       description,
       media: mediaUrls,
       typeOfComplaint,
-      stationName: inputValue,
+      stationName: inputValue.toLowerCase(),
       pnrNumber: trainNo ,
       TrainClass:trainClass,
     };
@@ -211,19 +259,23 @@ function Enquiry() {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Invalid Complaint!",})
+          text: text,})
       }
       
     } catch (error) {
       console.error("Error validating complaint:", error);
       
     }
+    }
+  };
+    
+   
 
 
 
 
     
-  };
+  
 
 
 
@@ -239,6 +291,7 @@ function Enquiry() {
         );
        
         setSuggestions(filteredSuggestions);
+      
       } else {
         console.log("jdjd");
         setSuggestions([]);
@@ -246,8 +299,9 @@ function Enquiry() {
     };
   
     const handleSuggestionClick = (suggestion) => {
-      setInputValue(suggestion.name);
+       setInputValue(suggestion.name);
       setSuggestions([]);
+     
     };
 
 
@@ -286,6 +340,7 @@ function Enquiry() {
       {/* Station Option */}
       <label className="flex items-center space-x-2 cursor-pointer text-gray-700 font-medium hover:scale-105 transition duration-300">
         <input
+        required
           type="radio"
           name="typeOfComplaint"
           value="Station"
@@ -314,6 +369,7 @@ function Enquiry() {
           <div className="relative w-full  mx-auto ">
       <input
         type="text"
+        required
         value={inputValue}
         onChange={handleInputChange2}
         placeholder="Search station..."
@@ -343,7 +399,8 @@ function Enquiry() {
         <div className="text-sm font-semibold flex justify-start mt-4 flex-col gap-1">
           <p>Train No:</p>
           <input
-            type="text"
+            type="number"
+            required
             placeholder="e.g., 12345"
             className="h-[3rem] py-3 px-2 w-full hover:border-2 hover:border-black rounded-xl border"
             value={trainNo}
@@ -361,6 +418,7 @@ function Enquiry() {
             placeholder="e.g., 1A, 2A , 3A"
             className="h-[3rem] py-3 px-2 w-full hover:border-2 hover:border-black rounded-xl border"
             value={trainClass}
+            required
             onChange={(e) => setTrainClass(e.target.value)}
           />
         </div>
@@ -378,6 +436,7 @@ function Enquiry() {
         type="text"
         value={inputValue}
         onChange={handleInputChange2}
+        required
         placeholder="Search station..."
         className="w-full p-3 border border-gray-300 rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       />
@@ -469,6 +528,7 @@ function Enquiry() {
             className="border hover:border-2 hover:border-black rounded-2xl p-3"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            required
           ></textarea>
         </div>
 

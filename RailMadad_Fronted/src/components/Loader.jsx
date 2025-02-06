@@ -3,11 +3,11 @@ import load from "../Images/loader.gif"
 
 const Loader = () => {
   return (
-    <div className='flex h-screen w-screen bg-white justify-center items-center flex-col'>
+    <div className='flex  h-[80vh] w-screen bg-white justify-center items-center flex-col'>
+<div className="loader"></div>
 
-        <img src={load} alt="" className='h-[14rem] w-[14rem]' />
-      
-        <h1 className='text-2xl font-light '>Loading...</h1>
+<p className='font-bold text-black text-2xl mt-3'>Loading ...</p>
+       
     </div>
   )
 }

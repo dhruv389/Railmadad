@@ -54,7 +54,7 @@ const complaintSchema = new mongoose.Schema({
   },
  
   pnrNumber: {
-    type: Number,
+    type: String,
     // required: true
   },
   AfterImage:{

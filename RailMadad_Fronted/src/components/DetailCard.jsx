@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable react/prop-types */
+
 import axios from 'axios';
 
 
@@ -65,57 +66,35 @@ console.log(complaint);
       <div className="relative max-w-[70vw] w-full max-h-[85vh] sm:mx-0 text-center mx-auto p-6 bg-white shadow-lg rounded-lg">
         <div className="flex justify-between h-full items-start">
           {/* Left side (Text Details) */}
-          <div className="w-[60%] ">
-            <h1 className="text-2xl font-bold">{complaint.category}</h1>
-           
-            <p className="text-sm font-semibold text-green-500 mt-1">{complaint.status}</p>
+          <div className="w-[60%]  rounded-lg p-6">
+      <h1 className="text-2xl font-bold text-gray-800">{complaint.category}</h1>
+      <p className="mt-2 px-3 py-1 inline-block text-sm font-semibold rounded-lg bg-red-100 text-red-600">{complaint.status}</p>
 
-            <div className="mt-6 flex gap-7 justify-start items-start">
-              <p className="text-sm font-bold text-gray-600">Complaint ID</p>
-              <p className="text-sm">{complaint._id}</p>
-            </div>
-
-            <div className="mt-4 flex gap-7 justify-start items-start">
-              <p className="text-sm font-bold text-gray-600">Type of Compalint</p>
-              <p className="text-sm">{complaint.typeOfComplaint}</p>
-            </div>
-
-            <div className="mt-4 flex gap-7 justify-start items-start">
-              <p className="text-sm font-bold text-gray-600">Status</p>
-              <p className="text-green-500">{complaint.status}</p>
-            </div>
-
-            <div className="mt-4 flex gap-7 justify-start items-start">
-              <p className="text-sm font-bold text-gray-600">Category</p>
-              <p className="text-sm">{complaint.category}</p>
-            </div>
-
-            <div className="mt-4 flex gap-7 justify-start items-start">
-              <p className="text-sm font-bold text-gray-600">Description</p>
-              <p className="text-start text-sm">{complaint.description}</p>
-            </div>
-
-          
-
-            <div className="mt-4 flex gap-7 justify-start items-start">
-              <p className="text-sm font-bold text-gray-600">User</p>
-              <p className="text-sm">{complaint.user}</p>
-            </div>
-
-            <div className="mt-4 flex gap-7 justify-start items-start">
-              <p className="text-sm font-bold text-gray-600">Station</p>
-              <p className="text-sm">{complaint.stationName}</p>
-            </div>
-
-            
-
-            <div className="mt-4 flex gap-7 justify-start items-start">
-              <p className="text-sm font-bold text-gray-600">Days</p>
-              <p className="text-sm">{calculateDaysSince(complaint.createdAt)} days ago</p>
-            </div>
-
-           
+      <div className="mt-6 grid grid-cols-2 gap-4">
+        {[
+          { label: "Complaint ID", value: complaint._id },
+          { label: "Type of Complaint", value: complaint.typeOfComplaint },
+          { label: "Status", value: complaint.status, color: "text-green-500" },
+          { label: "Category", value: complaint.category },
+          { label: "Description", value: complaint.description },
+          { label: "User", value: complaint.user },
+          { label: "Station", value: complaint.stationName },
+          { label: "Days", value: `${calculateDaysSince(complaint.createdAt)} days ago` },
+        ].map((item, index) => (
+          <div key={index} className="flex flex-col">
+            <label className="text-sm text-start font-bold text-gray-600">{item.label} :</label>
+            <input
+              type="text"
+              value={item.value}
+              readOnly
+              className={`mt-1 px-3 py-2 shadow-sm  border border-gray-300 rounded-lg text-gray-800 text-sm focus:outline-none cursor-not-allowed ${
+                item.color || ""
+              }`}
+            />
           </div>
+        ))}
+      </div>
+    </div>
 
           {/* Right side (Image Upload and Actions) */}
           <div className="w-[40%] flex flex-col h-full items-center">
@@ -131,7 +110,7 @@ console.log(complaint);
  
 
           <div className="flex mt-4 w-full space-x-2 flex-col">
-           <input type="text" name="" id="" className="rounded-2xl px-7 py-2 hover:border-blue-300 hover:border-2 bg-gray-200" placeholder="Add comment" />
+          
            <div className="w-full mt-6 flex gap-3">
            <button className="flex-1 bg-red-500 text-white py-2 text-sm rounded-lg" onClick={()=>handleDelete(complaint._id)}>Delete Complaint</button>
            <button className="flex-1 bg-green-500 text-white py-2  text-sm  rounded-lg" onClick={()=>handleSendtoStaff(complaint._id)}>Send Complaint  </button>

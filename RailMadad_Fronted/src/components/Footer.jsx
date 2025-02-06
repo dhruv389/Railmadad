@@ -9,7 +9,7 @@ const Footer = () => {
         
         {/* Copyright Section */}
         <div className="text-sm text-center md:text-left">
-          <p>© 2019 RAILMADAD. All Rights Reserved.</p>
+          <p>© 2025 RAILMADAD (Updated Version). All Rights Reserved.</p>
         </div>
 
         {/* Navigation Links */}

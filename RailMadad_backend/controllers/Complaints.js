@@ -10,7 +10,7 @@ const User = require('../models/User');
 // Get all complaints
 const createEnqury = async (req, res) => {
   try {
-    const { userId, category, description, media, typeOfComplaint } = req.body;
+    const { userId, category, description, media, typeOfComplaint ,stationName} = req.body;
     if(typeOfComplaint === 'Train'){
       const {pnrNumber,TrainClass}=req.body;
       const complaint = new Complaint({
@@ -20,14 +20,15 @@ const createEnqury = async (req, res) => {
         media,
         typeOfComplaint,
         pnrNumber,
-        TrainClass
+        TrainClass,
+        stationName
       });
 
       await complaint.save();
       res.status(201).json(complaint);
     }
     else{
-      const {stationName}=req.body;
+     
       const complaint = new Complaint({
         user: userId,
         category,

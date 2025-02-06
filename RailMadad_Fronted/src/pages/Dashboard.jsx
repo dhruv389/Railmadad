@@ -1,7 +1,4 @@
-import React from "react";
-import { FaTrainSubway } from "react-icons/fa6";
-import { HiMiniBuildingLibrary } from "react-icons/hi2";
-import { RiFileList3Fill } from "react-icons/ri";
+
 import { FaBuildingUser } from "react-icons/fa6";
 import Train from "./DashboardPages/Train";
 import Station from "./DashboardPages/Station";
@@ -26,7 +23,7 @@ const Dashboard = () => {
     <div className="w-screen bg-[#f6f8f9]  min-h-screen flex  justify-center items-center" style={{ backgroundImage: `url(#)` ,backgroundRepeat:"no-repeat", objectFit:"cover" ,backgroundSize:"100%" }}>
     
       <div className="w-screen  gap-6 min-h-screen  flex justify-center items-center   ">
-      <div className="w-[8rem]      rounded-3xl p-6 flex flex-col gap-8 items-center transition-all duration-300 hover:shadow-xl">
+      <div className="w-[8rem]    rounded-3xl p-6 flex flex-col gap-8 items-center transition-all duration-300 shadow-xl">
       {/* Complaint Button */}
       <button
         className="flex flex-col items-center text-gray-800 font-semibold gap-2 hover:scale-110 transition duration-300"
@@ -51,7 +48,7 @@ const Dashboard = () => {
     </div>
 
         <div
-          className="w-[65%] custom:w-[97%] bg-white rounded-3xl  h-[85vh]"
+          className="w-[65%] custom:w-[97%] bg-white rounded-3xl overflow-y-scroll  h-[85vh]"
           style={{ boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
         >
           <Routes>

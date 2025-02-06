@@ -1,22 +1,17 @@
 // Import React and necessary hooks
-import React, { useEffect, useState ,useContext} from 'react';
+import  { useEffect, useState ,useContext} from 'react';
 import jsonData from "./Stations.json";
 import {AuthContext } from '../Context/userContext'
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+
 import { MdAdd } from "react-icons/md";
 import { IoLogOutOutline } from "react-icons/io5";
 
 // Sample data for the table
-const tableData = [
-  { station: 'Ahmedabad', userType: 'Admin', email: 'admin@ahm.com', password: 'admin123' },
-  { station: 'Mumbai', userType: 'Staff', email: 'staff@mumbai.com', password: 'staff123' },
-  { station: 'Delhi', userType: 'User', email: 'user@delhi.com', password: 'user123' },
-  { station: 'Chennai', userType: 'Admin', email: 'admin@chennai.com', password: 'admin456' },
-];
+
 
 const SuperAdmin = () => {
-   const location = useLocation(); 
+  
 
    const {superAdminData , logoutSuperAdmin} = useContext(AuthContext);
 
@@ -430,8 +425,8 @@ var filteredData=[{ _id:"",
 
 
                        
-                        <input type="email" name="email" placeholder="Email"  value={newRow.email} onChange={handleNewRowChange} className="border rounded-md px-4 py-2 p-1 mb-2 w-full"  autocomplete="off" />
-                        <input type="password" name="password"   placeholder="Password" value={newRow.password} onChange={handleNewRowChange} className="border px-4 py-2 rounded-md p-1 mb-4 w-full" autocomplete="off" />
+                        <input type="email" name="email" placeholder="Email"  value={newRow.email} onChange={handleNewRowChange} className="border rounded-md px-4 py-2 p-1 mb-2 w-full"  autoComplete="off" />
+                        <input type="password" name="password"   placeholder="Password" value={newRow.password} onChange={handleNewRowChange} className="border px-4 py-2 rounded-md p-1 mb-4 w-full" autoComplete="off" />
                         <div className="flex justify-end font-light">
                             <button className="bg-gray-600 px-3 hover:bg-gray-900 text-white py-2  rounded mr-2" onClick={closeModal}>Cancel</button>
                             <button className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded" onClick={handleSubmit}>Add Row</button>

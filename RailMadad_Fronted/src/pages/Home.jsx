@@ -1,6 +1,6 @@
-import React from 'react'
 
-import train from "../Images/train7.png"
+import { TbTrain } from "react-icons/tb";
+
 import i1 from "../Images/download.png"
 import i2 from "../Images/download (1).png"
 import i3 from "../Images/download (2).png"
@@ -62,7 +62,7 @@ const Home = () => {
 
 
 <div className="flex flex-col items-center justify-center w-full min-h-[80vh] px-6 md:px-12 text-center">
-<div className="ripple-background  -z-20  relative bottom-[9rem]">
+<div className="ripple-background blur-sx  -z-20  relative bottom-[9rem]">
       <div className="circle xxlarge shade1"></div>
       <div className="circle xlarge shade2"></div>
       <div className="circle large shade3"></div>
@@ -73,8 +73,8 @@ const Home = () => {
    
       {/* Hero Title */}
       <h1 className="text-[4rem] animate-fadeIn md:text-6xl font-bold leading-tight max-w-[70vw]">
-        Welcome to <span className="text-yellow-400">Rail Madad</span>  
-        <br />
+	   Welcome to <p className="text-yellow-400 w-full flex justify-center items-center "> Rail Madad <TbTrain fontSize={"4rem"}/></p>  
+      
         Your <span className="text-yellow-400">Trusted</span> Railway  
         <span className="text-yellow-400"> Assistance</span> Platform
       </h1>

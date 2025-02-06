@@ -1,84 +1,72 @@
-const User = require('../models/User');
+const User = require("../models/User");
 // src/routes/authRoutes.js
-const Otp = require('../models/OtpModel');
+const Otp = require("../models/OtpModel");
 const jwt = require("jsonwebtoken");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const Account = require('../models/AccountModel');
-
-
-
+const Account = require("../models/AccountModel");
 
 const Adminlogin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
     // Find user in MongoDB
-    const user = await Account.findOne({ email , userType: 'Admin'});
+    const user = await Account.findOne({ email, userType: "Admin" });
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     // Verify password
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
-  
-   
     res.status(200).json({
-      message: 'Admin Login successful',
+      message: "Admin Login successful",
       data: {
         email: user.email,
         userType: user.userType,
         station: user.station,
       },
-    
     });
-  
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 const Stafflogin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
     // Find user in MongoDB
-    const user = await Account.findOne({ email , userType: 'Staff'});
+    const user = await Account.findOne({ email, userType: "Staff" });
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     // Verify password
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     // Authenticate with Firebase
-   
+
     res.status(200).json({
-      message: 'Staff Login successful',
+      message: "Staff Login successful",
       data: {
         email: user.email,
         userType: user.userType,
         station: user.station,
       },
-    
     });
-  
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-
-
 
 const transporter = nodemailer.createTransport({
   service: "Gmail", // Change to your SMTP service (e.g., Yahoo, Outlook)
@@ -88,12 +76,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-
 const SendOtp = async (req, res) => {
-  
-  
-
-   const  recipientEmail="rathoddhaval389@gmail.com"
+  const recipientEmail = "rathoddhaval389@gmail.com";
 
   // Generate a 6-digit OTP
   const generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
@@ -120,23 +104,19 @@ const SendOtp = async (req, res) => {
     return res.status(200).json({ message: "OTP sent successfully." });
   } catch (error) {
     console.error("Error sending OTP:", error.message);
-    return res.status(500).json({ message: "Failed to send OTP.", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Failed to send OTP.", error: error.message });
   }
-  
-  
-  }
-
-
-
-
+};
 
 const ValidateOtp = async (req, res) => {
-  const {otp} = req.body; // Email and OTP entered by the user
+  const { otp } = req.body; // Email and OTP entered by the user
 
   if (!otp) {
     return res.status(400).json({ message: "Email and OTP are required." });
   }
-  const email="rathoddhaval389@gmail.com"
+  const email = "rathoddhaval389@gmail.com";
   try {
     // Find the OTP in the database
     const foundOtp = await Otp.findOne({ email, otp });
@@ -153,28 +133,28 @@ const ValidateOtp = async (req, res) => {
 
     // OTP is valid
 
-
     const SECRET_KEY = process.env.SECRET_KEY || "EYDVHB8y849guyihsgh79GJRT"; // Use environment variable
-  const expiresIn = "1h"; // Token expiration time (e.g., 1 hour)
+    const expiresIn = "1h"; // Token expiration time (e.g., 1 hour)
 
-  // Create the payload for the token
-  const payload = {
-    id: foundOtp._id, // Use user ID
-    email: foundOtp.email, // Include user email
-  };
+    // Create the payload for the token
+    const payload = {
+      id: foundOtp._id, // Use user ID
+      email: foundOtp.email, // Include user email
+    };
 
-  // Sign the token with the payload, secret key, and expiration
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn });
+    // Sign the token with the payload, secret key, and expiration
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn });
     await Otp.deleteOne({ _id: foundOtp._id }); // Remove OTP after successful validation
-    return res.status(200).json({ message: "OTP validated successfully.", token });
+    return res
+      .status(200)
+      .json({ message: "OTP validated successfully.", token });
   } catch (error) {
     console.error("Error validating OTP:", error.message);
-    return res.status(500).json({ message: "Failed to validate OTP.", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Failed to validate OTP.", error: error.message });
   }
-}
-
-
-
+};
 
 const getAccount = async (req, res) => {
   try {
@@ -191,7 +171,6 @@ const getAccount = async (req, res) => {
     });
   }
 };
-
 
 const deleteAccount = async (req, res) => {
   const { id } = req.params;
@@ -242,17 +221,16 @@ const updateAccount = async (req, res) => {
       error: error.message,
     });
   }
-}
-
+};
 
 const CreateAccount = async (req, res) => {
   const { email, password, userType, station } = req.body;
-  
+
   if (!email || !password || !userType || !station) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
+    return res.status(400).json({ message: "All fields are required" });
+  }
+  
   try {
-   
     const newAccount = new Account({ email, password, userType, station });
     await newAccount.save();
 
@@ -269,5 +247,13 @@ const CreateAccount = async (req, res) => {
   }
 };
 
-
-module.exports = {Adminlogin,Stafflogin , SendOtp , ValidateOtp , getAccount , deleteAccount , updateAccount , CreateAccount};
+module.exports = {
+  Adminlogin,
+  Stafflogin,
+  SendOtp,
+  ValidateOtp,
+  getAccount,
+  deleteAccount,
+  updateAccount,
+  CreateAccount,
+};

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useFirebase } from '../../firebase/firebase';
-import { Link } from 'react-router-dom';
+
 
 const Track = () => {
   const { useruid } = useFirebase();  // Get the user ID from Firebase
@@ -35,16 +35,16 @@ const Track = () => {
   };
 
   return (
-    <table className="w-full  text-xs bg-white shadow-md h-auto rounded-lg">
+    <table className="w-full overflow-y-scroll text-xs bg-white shadow-md h-auto rounded-lg">
       <thead>
-        <tr className="text-left rounded-l-lg  rounded-r-lg  bg-yellow-300">
-          <th className="p-3 rounded-l-lg">No.</th>
+        <tr className="text-left rounded-t-lg    bg-yellow-200">
+          <th className="p-3 rounded-tl-lg">No.</th>
           <th className="p-3">Complaint</th>
           <th className="p-3">Category</th>
           
           <th className="p-3">Date</th>
           <th className="p-3">Status</th>
-          <th className="rounded-r-lg">Description</th>
+          <th className="rounded-tr-lg">Description</th>
         </tr>
       </thead>
       <tbody>
@@ -76,7 +76,7 @@ const Track = () => {
             </td>
 
 
-            <td className="">
+            <td className="" title={complaint.description} >
             
             {complaint.description.substring(0,20)} .......
            
