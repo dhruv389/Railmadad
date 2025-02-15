@@ -1,14 +1,15 @@
 import React, { useRef, useState } from 'react'
-
+import { FaUserAlt } from "react-icons/fa";
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import {useNavigate} from 'react-router-dom';
 import { useFirebase } from '../firebase/firebase';
 import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import Loader from "../components/Loader"
+
 
 const Login = () => {
     // const MySwal = withReactContent(Swal)
-
+   const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const formRef = useRef(null);
@@ -29,16 +30,16 @@ const Toast = Swal.mixin({
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true);
         console.log(email, password);
         try {
             
             const user=await signInWithEmailAndPassword(firebase.auth, email, password);
-            
             const uid = user.user.uid;
             navigate("/dashboard/enquiry");
             // Swal.fire("You are Login!");
 
-           
+            setLoading(false);
               Toast.fire({
                 icon: "success",
                 title: "Signed in successfully"
@@ -47,6 +48,7 @@ const Toast = Swal.mixin({
             console.log(user)
         } catch (error) {
             // setError(error.message);
+            setLoading(false);
             Toast.fire({
                 icon: "error",
                 title: "Please enter correct email and password"
@@ -55,10 +57,12 @@ const Toast = Swal.mixin({
         }
        
     };
+
+    if(loading) return <Loader/>;
     
     return (
         <div className="flex justify-center custom:pb-20 custom:pt-10 custom:h-auto flex-col items-center h-screen bg-gray-200">
-  <div className="font-bold text-[2rem]">Login</div>
+  <div className="font-semibold mb-3 px-4 py-2 relative top-8 bg-black rounded-xl text-white text-[1.4rem] flex justify-center items-center"><FaUserAlt className='mr-4'/> User Login</div>
 
             {/* <div className="bg-white p-16 rounded-lg shadow-2xl w-2/3">
                 <h2 className="text-3xl font-bold mb-10 text-center">Login</h2>
@@ -90,7 +94,7 @@ const Toast = Swal.mixin({
                         <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-600">Password</label>
                         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" className="w-full p-3 border-2 rounded-lg focus:outline-none focus:ring focus:border-blue-300" />
                     </div>
-                    <button type="submit" className="w-full bg-blue-500 py-3 rounded-lg text-white shadow-xl hover:bg-blue-700">Login</button>
+                    <button type="submit" className="w-full bg-black py-3 rounded-lg text-white shadow-xl hover:bg-yellow-300">Login</button>
                 </form>
                 </div>
             </div>

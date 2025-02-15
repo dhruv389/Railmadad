@@ -4,8 +4,9 @@ import { TbTrain } from "react-icons/tb";
 import i1 from "../Images/download.png"
 import i2 from "../Images/download (1).png"
 import i3 from "../Images/download (2).png"
-
+import Chatbot from  "../components/Chatbot";
 import { getAuth, onAuthStateChanged } from "firebase/auth"
+import {Link} from "react-router-dom";
 
 
 
@@ -62,6 +63,7 @@ const Home = () => {
 
 
 <div className="flex flex-col items-center justify-center w-full min-h-[80vh] px-6 md:px-12 text-center">
+<Chatbot/>
 <div className="ripple-background blur-sx  -z-20  relative bottom-[9rem]">
       <div className="circle xxlarge shade1"></div>
       <div className="circle xlarge shade2"></div>
@@ -71,13 +73,17 @@ const Home = () => {
     </div>
         
    
-      {/* Hero Title */}
-      <h1 className="text-[4rem] animate-fadeIn md:text-6xl font-bold leading-tight max-w-[70vw]">
-	   Welcome to <p className="text-yellow-400 w-full flex justify-center items-center "> Rail Madad <TbTrain fontSize={"4rem"}/></p>  
-      
-        Your <span className="text-yellow-400">Trusted</span> Railway  
-        <span className="text-yellow-400"> Assistance</span> Platform
-      </h1>
+      {/* Hero Title   */}
+	  <h1 className="text-[4rem]  md:text-6xl  font-bold  max-w-[74vw] text-center animate-fadeIn">
+	  <p className="flex justify-center items-center">
+	  Welcome to
+	  <span className=" text-yellow-400 ml-5 flex justify-center items-center">  Rail Madad  <TbTrain fontSize={"4.9rem"} className="text-black"/></span>  
+	  </p>
+  
+  Your <span className="text-yellow-400">Trusted</span> Railway  
+  <span className="text-yellow-400">Assistance</span> Platform
+</h1>
+
 
       {/* Hero Description */}
       <p className="text-gray-600 animate-slideIn text-md md:text-xl mt-4 max-w-2xl">
@@ -88,9 +94,9 @@ const Home = () => {
 
       {/* CTA Button */}
       <div className="mt-6">
-        <button className="bg-black text-white px-6 py-3 rounded-full text-lg hover:bg-gray-800 transition-transform transform hover:scale-105">
-          Get Started
-        </button>
+        <Link to="/login" className="bg-black text-white px-6 py-2 rounded-2xl text-lg hover:bg-gray-800 transition-transform transform hover:scale-105">
+          Raise Complaint
+        </Link>
       </div>
 
     </div>

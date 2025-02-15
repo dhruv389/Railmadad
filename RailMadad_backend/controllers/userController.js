@@ -4,9 +4,10 @@ const Otp = require("../models/OtpModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
+
+
 const Account = require("../models/AccountModel");
+
 
 const Adminlogin = async (req, res) => {
   const { email, password } = req.body;
@@ -197,15 +198,25 @@ const deleteAccount = async (req, res) => {
 
 const updateAccount = async (req, res) => {
   const { id } = req.params;
-  const { password, email, userType, station } = req.body;
+  const {updateData} = req.body;
+ 
+   console.log(updateData.updatedData)
+   console.log(id)
+  if (!updateData.updatedData) {
+      return res.status(400).json({ message: "No update data provided" });
+    }
 
   try {
+
+    const { email, userType, station } = updateData.updatedData;
+   console.log(email,userType,station)
     const updatedAccount = await Account.findByIdAndUpdate(
       id,
-      { password, email, userType, station },
+      { $set: { email, userType, station } },
       { new: true, runValidators: true }
     );
-
+    
+    console.log(updatedAccount);
     if (!updatedAccount) {
       return res.status(404).json({ message: "Account not found" });
     }
@@ -229,9 +240,19 @@ const CreateAccount = async (req, res) => {
   if (!email || !password || !userType || !station) {
     return res.status(400).json({ message: "All fields are required" });
   }
-  
+
   try {
-    const newAccount = new Account({ email, password, userType, station });
+    // ✅ Hash password before saving
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const newAccount = new Account({ 
+      email, 
+      password: hashedPassword, // ✅ Save hashed password
+      userType, 
+      station
+    });
+
     await newAccount.save();
 
     res.status(201).json({

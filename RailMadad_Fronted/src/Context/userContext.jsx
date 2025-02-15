@@ -116,6 +116,10 @@ export const AuthProvider = ({ children }) => {
   const logoutStaff = () => {
     setStaffData(null);
     localStorage.removeItem('staffData');
+    Toast.fire({
+      icon: "success",
+      title: "logout successfully as Staff",
+    });
   };
 
   const logoutSuperAdmin = () => {

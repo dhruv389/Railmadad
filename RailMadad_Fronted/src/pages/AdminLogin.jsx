@@ -3,10 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from "sweetalert2";
 import {AuthContext } from '../Context/userContext'
+import Loader from '../components/Loader';
+import { GrUserAdmin } from "react-icons/gr";
+import admin from  "../Images/admini.jpeg"
+
 
 const AdminLogin = () => {
  const {loginAdmin,Toast} = useContext(AuthContext);
-
+  const [Loading , setLoading]= useState(false);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,7 +21,7 @@ const AdminLogin = () => {
         event.preventDefault();
       
         // Collect form data
-       
+         setLoading(true);
       
         try {
           // Post data to the backend
@@ -30,6 +34,7 @@ const AdminLogin = () => {
           console.log('Login successful:', response.data);
           loginAdmin(response.data);
           // Navigate to a dashboard or perform further actions
+          setLoading(false);
           navigate('/admindashboard', { replace: true });
           Toast.fire({
             icon: "success",
@@ -38,12 +43,14 @@ const AdminLogin = () => {
 
           }
           catch (error) {
+            setLoading(false);
             Toast.fire({
               icon: "error",
               title: "please add correct email and password",
             });
     if (error.response) {
       // The request was made, and the server responded with a status code
+      setLoading(false);
       console.error('Login failed:', error.response.data);
       alert(error.response.data.message || 'Login failed, please try again.');
     } else if (error.request) {
@@ -52,22 +59,24 @@ const AdminLogin = () => {
       alert('No response from the server, please try again.');
     } else {
       // Something happened in setting up the request
+      setLoading(false);
       console.error('Error:', error.message);
       alert('An error occurred, please try again.');
     }
       };}
 
+      if(Loading) return <Loader/>
 
   return (
     <div className="flex justify-center custom:pb-20 custom:pt-10 custom:h-auto flex-col items-center h-screen bg-gray-200">
-    <div className="font-bold text-[2rem]">Admin Login</div>
+   <div className="font-semibold mb-3 px-4 py-2 relative top-8 bg-black rounded-xl text-white text-[1.4rem] flex justify-center items-center"><GrUserAdmin className='mr-4'/> Admin Login</div>
   
               
   
   
               <div className="w-[75%] custom:py-5 custom:gap-6 h-[80%] custom:w-[95%] custom:flex-col rounded-tl-[35px] rounded-br-[35px] px-10 bg-white flex justify-between items-center">
                   <div className=" w-[40%] custom:max-h-[10rem] custom:w-full flex justify-between items-center  h-full rounded-tl-[35px] rounded-br-[35px]">
-   <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className='h-[94%] w-full object-cover rounded-tl-[35px] custom:max-h-[10rem] rounded-br-[35px]' />
+   <img src={admin} alt="" className='h-[94%] w-full object-cover rounded-tl-[35px] custom:max-h-[10rem] rounded-br-[35px]' />
                   </div> 
                   <div className="w-[55%] custom:w-full  flex justify-center items-center flex-col h-[95%]">
                   <form ref={formRef} onSubmit={handleSubmit} className='w-[97%]'>

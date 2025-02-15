@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import  {  useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import { FaUsersGear } from "react-icons/fa6";
 import {AuthContext } from '../Context/userContext'
+import staff from "../Images/staffi.jpeg"
 
 const StaffLogin = () => {
   const {loginStaff,Toast} = useContext(AuthContext);
@@ -12,7 +13,7 @@ const StaffLogin = () => {
   const [password, setPassword] = useState('');
   const formRef = useRef(null);
   const navigate = useNavigate();
-
+ 
   const handleSubmit = async (event) => {
       event.preventDefault();
     
@@ -69,14 +70,14 @@ const StaffLogin = () => {
 
 return (
   <div className="flex justify-center custom:pb-20 custom:pt-10 custom:h-auto flex-col items-center h-screen bg-gray-200">
-  <div className="font-bold text-[2rem]">Staff Login</div>
+   <div className="font-semibold mb-3 px-4 py-2 relative top-8 bg-black rounded-xl text-white text-[1.4rem] flex justify-center items-center"><FaUsersGear className='mr-4'/> Staff Login</div>
 
             
 
 
             <div className="w-[75%] custom:py-5 custom:gap-6 h-[80%] custom:w-[95%] custom:flex-col rounded-tl-[35px] rounded-br-[35px] px-10 bg-white flex justify-between items-center">
                 <div className=" w-[40%] custom:max-h-[10rem] custom:w-full flex justify-between items-center  h-full rounded-tl-[35px] rounded-br-[35px]">
- <img src="https://images.unsplash.com/photo-1565598469107-2bd14ae7e7e4?q=80&w=1846&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className='h-[94%] w-full object-cover rounded-tl-[35px] custom:max-h-[10rem] rounded-br-[35px]' />
+ <img src={staff} alt="" className='h-[94%] w-full object-cover rounded-tl-[35px] custom:max-h-[10rem] rounded-br-[35px]' />
                 </div> 
                 <div className="w-[55%] custom:w-full  flex justify-center items-center flex-col h-[95%]">
                 <form ref={formRef} onSubmit={handleSubmit} className='w-[97%]'>
@@ -88,7 +89,7 @@ return (
                         <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-600">Password</label>
                         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" className="w-full p-3 border-2 rounded-lg focus:outline-none focus:ring focus:border-blue-300" />
                     </div>
-                    <button type="submit" className="w-full bg-blue-500 py-3 rounded-lg text-white shadow-xl hover:bg-blue-700">Login</button>
+                    <button type="submit" className="w-full bg-black py-3 rounded-lg text-white shadow-xl hover:bg-yellow-300">Login</button>
                 </form>
                 </div>
             </div>

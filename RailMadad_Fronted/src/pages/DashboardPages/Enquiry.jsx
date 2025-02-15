@@ -7,10 +7,11 @@ import { useFirebase } from '../../firebase/firebase.jsx';
 import { Cloudinary } from "cloudinary-core";
 import Swal from 'sweetalert2'
 import { GoogleGenerativeAI } from '@google/generative-ai'; 
-
+import Loader from "../../components/Loader.jsx";
+import Loader2 from "../../components/Loader2.jsx";
 
 function Enquiry() {
- 
+  const [suggestions, setSuggestions] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [trainNo, setTrainNo] = useState("");
   const [category, setCategory] = useState("");
@@ -18,7 +19,8 @@ function Enquiry() {
   const [description, setDescription] = useState("");
   const [mediaUrls, setMediaUrls] = useState([]);
   const [typeOfComplaint, setTypeOfComplaint] = useState("Train"); // Default value
-  
+  const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
   const firebase = useFirebase();
  
   const[image,setImage]=useState(null);
@@ -48,7 +50,7 @@ function Enquiry() {
     setImage(files[0]);
 
 
-    const genAI = new GoogleGenerativeAI("AIzaSyCZpCZCeOHtMk2s2T3_ZUuVoifq_b4dIKQ"); 
+    const genAI = new GoogleGenerativeAI("AIzaSyC9Uzc1ZyQ3ve_AHqYtN6H8sk-n0wgpqmM"); 
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
    
 
@@ -57,7 +59,7 @@ function Enquiry() {
     if (files[0]) {
       console.log("*******");
       try {
-      
+        setLoading2(true);
     
         const result = await model.generateContent([
           "Identify the most relevant category for the image from: Engineering, Electrical, Traffic, Medical, Security, Sanitation, or Food Department. Respond with the category name or 'false' if no match.",
@@ -72,8 +74,17 @@ function Enquiry() {
         const isValid = result.response.text().trim();
         console.log(isValid+"--------------------");
         setCategory(isValid === "false" ? "No Match" : isValid); 
+        setLoading2(false);
         if(isValid === "false") {
-       window.alert("No Match Found");
+          setImage(null);
+          Swal.fire({
+            icon: "error",
+           
+            text: "Please choose a clear and relevant image related to your train or station issue.🖼️",
+          
+          });
+
+
         }
         else {
           const cloudinaryCore = new Cloudinary({
@@ -149,57 +160,7 @@ function Enquiry() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-   
-    const fields = [
      
-      { name: 'Description', value: description },
-      { name: 'Image', value: mediaUrls },
-      { name: 'typeOfComplaint', value: typeOfComplaint },
-      { name: 'Station name', value: inputValue },
-      { name: 'train no', value: trainNo },
-      { name: 'train Class', value: trainClass },
-    ];
-
-
-
-    const emptyFields = fields.filter((field) => {
-      if (Array.isArray(field.value)) {
-        return field.value.length === 0; // Check if array is empty (e.g., mediaUrls)
-      }
-      return field.value.trim() === ''; // Check if string is empty
-    });
-
-
-
-    if (emptyFields.length > 0) {
-      const fieldsArray = emptyFields.map((field) => field.name);
-
-Swal.fire({
-  icon: "error",
-  title: "<span style='color: #e74c3c; font-weight: bold;'>Oops...</span>",
-  html: `
-    <p style="font-size: 18px; font-weight: 500; color: #333;">⚠️The following fields are empty:</p>
-    <ul style="font-size: 16px; display :flex; flex-wrap:wrap; gap:8px; justify-content:center; font-weight: 500; line-height: 1.5; padding: 0;">
-      ${fieldsArray
-        .map(
-          (field, id) =>
-            `<li style="background-color:black; color:white; border-radius:20px; padding-left:9px; padding-right:9px; margin-bottom:2px;" key=${id}> ${field}</li>`
-        )
-        .join("")}
-    </ul>
-    <p style="margin-top: 10px; color: #555;">Please fill them out to proceed.</p>
-  `,
-  confirmButtonText: "Fill Now",
-  confirmButtonColor: "#e74c3c",
-  background: "#fff",
-  width: "450px",
-  customClass: {
-    popup: "modern-alert",
-  },
-});
-
-
-    } else {
       try {
       const genAI = new GoogleGenerativeAI("AIzaSyCZpCZCeOHtMk2s2T3_ZUuVoifq_b4dIKQ"); 
       const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
@@ -222,7 +183,12 @@ Swal.fire({
       //response.text.trim() === 'true'
        const isvalid= text==="true";
       if (isvalid) {
-        console.log(inputValue);
+         
+   if(!firebase.userid)  setLoading(true);
+   else  setLoading(false);
+        
+    
+
         const complaintData = {
       userId: firebase.useruid, // Replace with actual user ID
       category: category+" Department",
@@ -260,18 +226,19 @@ Swal.fire({
           icon: "error",
           title: "Oops...",
           text: text,})
+          setDescription("");
       }
       
     } catch (error) {
       console.error("Error validating complaint:", error);
       
     }
-    }
+    
   };
     
    
 
-
+ if(loading) return <Loader/>
 
 
     
@@ -279,7 +246,7 @@ Swal.fire({
 
 
 
-    const [suggestions, setSuggestions] = useState([]);
+    
   
     const handleInputChange2 = (e) => {
       const value = e.target.value;
@@ -475,7 +442,7 @@ Swal.fire({
 
 
 
-   { image ? <img src={URL.createObjectURL(image)} alt="" className="w-[40%] mt-5 rounded-xl h-[15rem]" /> :
+   {loading2?<Loader2/> : image ? <img src={URL.createObjectURL(image)}  alt="" className="w-[40%] mt-5 rounded-xl h-[15rem]" /> :
    (<div className="flex items-center justify-start w-full mt-6 flex-col"> <h1 className="w-full py-3 text-sm font-semibold">
             Choose File From Device
           </h1>
@@ -510,6 +477,7 @@ Swal.fire({
             <input
               id="dropzone-file"
               type="file"
+              accept=".jpg, .jpeg"
               className="hidden"
               multiple
               onChange={handleFileUpload}

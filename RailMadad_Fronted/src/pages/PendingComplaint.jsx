@@ -54,7 +54,9 @@ useEffect(() => {
 }, [activeTab2]); // Dependency on adminData.station instead of adminData
 
 if (loading1) {
-  return <Loader/>; // Show a loading indicator while fetching data
+  return <div className="w-full h-full font-bold text-[2rem]   flex justify-center items-center ">
+    Loading...
+  </div>; // Show a loading indicator while fetching data
 }
 
 

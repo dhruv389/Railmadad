@@ -209,7 +209,7 @@ html {
   border-radius: 50%;
   
  
-  animation: ripple 15s infinite;
+  animation: ripple 8s infinite;
   /* box-shadow: 0px 0px 1px 0px #508fb9; */
 
 
@@ -325,3 +325,43 @@ box-shadow:  6px 6px 10px #d7d7d3,
 @keyframes l14 { 
  100% {transform: rotate(0.5deg)}
 }
+
+
+
+
+
+.custom-loader {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-loader-cube {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+}
+
+.custom-loader-cube-glowing {
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.custom-loader-cube-color {
+  z-index: 1;
+  filter: blur(2px);
+  background: linear-gradient(135deg, #1afbf0, #da00ff);
+  animation: custom-load-animation 2.5s ease-in-out infinite;
+}
+
+@keyframes custom-load-animation {
+  50% {
+    transform: rotate(-80deg);
+  }
+}
+

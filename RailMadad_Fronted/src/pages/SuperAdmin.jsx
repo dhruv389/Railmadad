@@ -13,7 +13,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 const SuperAdmin = () => {
   
 
-   const {superAdminData , logoutSuperAdmin} = useContext(AuthContext);
+   const {superAdminData , logoutSuperAdmin , Toast} = useContext(AuthContext);
 
 // -------------------   Get Accounts--------------------------------------------
   const[accounts,setAccounts] = useState([]);
@@ -44,7 +44,7 @@ const SuperAdmin = () => {
     
       console.warn("No superAdminData available for authorization");
     }
-  }, []);
+  },[superAdminData,logoutSuperAdmin,]);
 
 
   
@@ -71,7 +71,7 @@ const SuperAdmin = () => {
     };
   
     const handleSuggestionClick = (suggestion) => {
-      setInputValue(suggestion.name);
+      setInputValue(suggestion.name.toLowerCase());
       setSuggestions([]);
     };
 
@@ -119,9 +119,9 @@ var filteredData=[{ _id:"",
     };
 
     const handleSave = async(id, updatedData) => {
-        console.log("----------",updatedData);
+     
 
-      
+         console.log(updatedData);
 
         try {
             
@@ -138,18 +138,18 @@ var filteredData=[{ _id:"",
             );
       
             // Handle success response
-            console.log(response.data.message); // "Complaint deleted successfully"
-            alert("Complaint deleted successfully");
+            console.log(response.data.message); // "Complaint updated successfully"
+            alert("Complaint updated successfully");
 
             setEditRowId(null);
           } catch (error) {
             // Handle error response
             console.error(
-              "Error deleting Account:",
+              "Error update Account:",
               error.response?.data?.message || error.message
             );
             alert(
-              "Error deleting Account: " +
+              "Error update Account: " +
                 (error.response?.data?.message || error.message)
             );
           }
@@ -265,6 +265,11 @@ var filteredData=[{ _id:"",
         
             setSelectedOption("");
             setNewRow({ station: '', userType: '', email: '', password: '' }); // Clear form fields after successful submission
+            Toast.fire({  // Use Toast instead of alert
+              icon: 'success',
+              title: response.data.message,
+
+            });
 
          // Clear form fields after successful submission
         } catch (error) {
@@ -353,7 +358,7 @@ var filteredData=[{ _id:"",
 
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"> {/* Modal Overlay */}
-                    <div className="bg-white p-8 rounded flex flex-col gap-6 shadow-lg w-1/2"> {/* Modal Content */}
+                    <form className="bg-white p-8 rounded flex flex-col gap-6 shadow-lg w-1/2"> {/* Modal Content */}
                         <h2 className="text-lg font-bold mb-4">Add New Row</h2>
 
                       
@@ -431,7 +436,7 @@ var filteredData=[{ _id:"",
                             <button className="bg-gray-600 px-3 hover:bg-gray-900 text-white py-2  rounded mr-2" onClick={closeModal}>Cancel</button>
                             <button className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded" onClick={handleSubmit}>Add Row</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             )}
         </div>

@@ -1,10 +1,11 @@
-import React  , {useState,useContext} from "react";
+import React  , {useState,useContext, useEffect} from "react";
 
 import CompletedStaff from "./CompletedStaff";
 import { AuthContext } from "../Context/userContext";
 import PendingStaff from "./PendingStaff";
 import { HiOutlineLogout } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 
 
 
@@ -18,9 +19,13 @@ const StaffDashboard = () => {
     'Security Department',
     'Sanitation Department',
     'Food Department',
-  ];
+];
+const {staffData, logoutStaff }=useContext(AuthContext);
+const navigate = new useNavigate();
+  useEffect(()=>{
+   if(!staffData)  navigate("/stafflogin")
+  },[staffData])
 
-const {adminData}=useContext(AuthContext);
       const [activeTab2, setActiveTab2] = useState(options[0]);
   
   const [activeTab, setActiveTab] = useState('Pending');
@@ -39,7 +44,7 @@ const {adminData}=useContext(AuthContext);
               📌  Staff Dashboard
               </span>
               <h2 className="text-sm font-semibold bg-black text-white px-3 py-1 rounded-full">
-  🗺️  {adminData.data.station}
+  🗺️  {staffData.data.station}
 
               </h2>
             </div>
@@ -50,7 +55,7 @@ const {adminData}=useContext(AuthContext);
             </div>
       
             {/* User Profile */}
-            <div className="flex items-center bg-black text-white p-3 rounded-xl shadow-md">
+            <button onClick={()=>logoutStaff()} className="flex items-center bg-black text-white p-3 rounded-xl shadow-md hover:bg-yellow-300">
               <img
                 src="https://m.media-amazon.com/images/M/MV5BYzI1MTM4Y2MtZmMzNC00MWY1LTk3MWEtOGU2NGEwY2QwYjJjXkEyXkFqcGc@._V1_.jpg"
                 alt="Dhaval Rathod"
@@ -61,7 +66,7 @@ const {adminData}=useContext(AuthContext);
                 <p className="text-xs text-gray-500">Staff</p>
               </div>
               <HiOutlineLogout size={22} className="ml-auto text-gray-600 cursor-pointer hover:text-red-500" />
-            </div>
+            </button>
           </aside>
 
       {/* Main Content */}

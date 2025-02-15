@@ -1,9 +1,9 @@
-import React  , {useState,useContext} from "react";
+import  {useState,useContext} from "react";
 import { AuthContext } from "../Context/userContext";
 import CompletedComplaint from "./CompletedComplaint";
 import PendingComplaint from "./PendingComplaint";
 import { HiOutlineLogout } from "react-icons/hi";
-import { Link } from "react-router-dom";
+
 
 
 const AdminDashboard = () => {
@@ -16,7 +16,7 @@ const AdminDashboard = () => {
       'Security Department',
       'Sanitation Department',
       'Food Department',
-    ];
+  ];
 
 
       const [activeTab2, setActiveTab2] = useState(options[0]);
@@ -105,7 +105,7 @@ const AdminDashboard = () => {
       />
     </div>
 
-      <h1 className="mt-10 ml-8 font-mormal text-lg">Cetegories :</h1>
+      <h1 className="mt-10 ml-8 font-mormal text-lg">Categories :</h1>
       <div className="flex flex-wrap space-x-2 gap-2  rounded-full p-2">
     
         {options.map((option) => (
