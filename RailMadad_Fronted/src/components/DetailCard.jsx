@@ -25,7 +25,7 @@ console.log(complaint);
     }
 
     try {
-      const response = await axios.delete('http://localhost:5000/api/deleteComplaint', {
+      const response = await axios.delete('http://localhost:5000/api/deletecomplaintbyadmin', {
         data: { complaintId } // Axios sends the data in the request body for DELETE requests
       });
 
