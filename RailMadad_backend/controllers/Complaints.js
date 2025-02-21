@@ -113,7 +113,7 @@ const getAllStationComplaint = async (req, res) => {
     const stationName = req.params.station;
 
     // Fetch complaints by user
-    const complaints = await Complaint.find({ stationName });
+  const complaints = await Complaint.find({ stationName });
 
     // Check if any complaints were found
     if (complaints.length === 0) {

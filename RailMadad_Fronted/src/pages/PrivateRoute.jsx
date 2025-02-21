@@ -40,12 +40,13 @@ const User=user;
   }
    
   if(uii) {
-   
-    if(isLoading) return <Loader/>;
+    
+    // if(isLoading) return <Loader/>;
 
     if(User) { 
       setIsLoading(false);
-      return  children;}
+      return  <Navigate to="/dashboard/enquiry" replace />;}
+    else return children;
   }
 
 
@@ -53,12 +54,20 @@ const User=user;
   if(isUserLoginRoute) {
   
     
-  if(isLoading) return <Loader/>;
-  console.log(user);
-     if(user) {
-     
-      return  children;}
-     else return  <Navigate to="/login" replace />;
+    console.log(User+"-----========");
+   
+  // if(isLoading) return <Loader/>;
+     if(User===null) { 
+      setIsLoading(false);
+       console.log("User🚆😒😒😒😒 is null");
+      
+      return  <Navigate to="/login" replace />;
+       
+      }
+     else  
+     return  children;
+  
+    
     
   }
 

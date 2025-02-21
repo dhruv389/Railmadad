@@ -14,7 +14,8 @@ import PrivateRoute from "./pages/PrivateRoute";
 import Stepper from "./pages/Stepper";
 import AdminLogin from "./pages/AdminLogin";
 import StaffLogin from "./pages/StaffLogin";
-
+import  StaffChatbot from "./pages/StaffChatbot";
+import UserChatbot from "./pages/UserChatbot";
 
 function App() {
   const router = createBrowserRouter([
@@ -25,12 +26,14 @@ function App() {
       children: [
         { index: true, element: <Home /> },
         { path: "dashboard", element: <Dashboard /> },
-        { path: "login", element: <Login /> },
+        // { path: "login", element: <Login /> },
         { path: "signup", element: <SignUp/> },
         // { path: "dashboard/*", element: <Dashboard /> },
        
         { path: "getowncomplaints", element: <UserComplaints/> },
         { path: "superadminauth", element: <Stepper/> },
+        // { path: "chat", element: <StaffChatbot/> },
+        { path: "chat2", element: <UserChatbot/> },
         // { path: "admindashboard", element: <AdiminDashboard/> },
         // { path: "staffdashboard", element: <StaffDashboard/> },
 
@@ -42,7 +45,15 @@ function App() {
             </PrivateRoute>
           ),
         },
-
+ 
+        {
+          path: 'login',
+          element: (
+            <PrivateRoute>
+             <Login/>
+            </PrivateRoute>
+          ),
+        },
 
         {
           path: 'staffdashboard',

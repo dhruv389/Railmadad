@@ -6,7 +6,7 @@ import PendingStaff from "./PendingStaff";
 import { HiOutlineLogout } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 
-
+import StaffChatbot from "./StaffChatbot";
 
 
 const StaffDashboard = () => {
@@ -33,6 +33,7 @@ const navigate = new useNavigate();
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
+      <StaffChatbot department={activeTab2} station={staffData.data.station}/>
      
       <aside className="w-64 border-2 border-gray-200 shadow-xl bg-white rounded-r-[2rem] flex items-center  flex-col justify-between h-[89vh] mt-[1rem] p-5 ">
             {/* Logo & Admin Section */}

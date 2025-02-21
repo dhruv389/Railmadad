@@ -7,12 +7,14 @@ import i3 from "../Images/download (2).png"
 import Chatbot from  "../components/Chatbot";
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import {Link} from "react-router-dom";
+import UserChatbot from "./UserChatbot";
 
 
 
 
 
 const Home = () => {
+	
 
 	// const [data, setData] = useState(null);
 	// const [error, setError] = useState(null);
@@ -59,7 +61,7 @@ const Home = () => {
 
 
 
-
+<UserChatbot/>
 
 
 <div className="flex flex-col items-center justify-center w-full min-h-[80vh] px-6 md:px-12 text-center">
@@ -71,10 +73,24 @@ const Home = () => {
       <div className="circle medium shade4"></div>
       <div className="circle small shade5"></div>
     </div>
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
         
    
       {/* Hero Title   */}
-	  <h1 className="text-[4rem]  md:text-6xl  font-bold  max-w-[74vw] text-center animate-fadeIn">
+	  <h1 className="text-[4rem]   md:text-6xl  font-bold  max-w-[74vw] text-center animate-fadeIn">
 	  <p className="flex justify-center items-center">
 	  Welcome to
 	  <span className=" text-yellow-400 ml-5 flex justify-center items-center">  Rail Madad  <TbTrain fontSize={"4.9rem"} className="text-black"/></span>  
@@ -94,7 +110,7 @@ const Home = () => {
 
       {/* CTA Button */}
       <div className="mt-6">
-        <Link to="/login" className="bg-black text-white px-6 py-2 rounded-2xl text-lg hover:bg-gray-800 transition-transform transform hover:scale-105">
+        <Link to="dashboard/enquiry" className="bg-black text-white px-6 py-2 rounded-2xl text-lg hover:bg-gray-800 transition-transform transform hover:scale-105">
           Raise Complaint
         </Link>
       </div>
@@ -254,6 +270,9 @@ const Home = () => {
 
 				</div>
 			</div>
+
+
+
 			
 		</div>
 

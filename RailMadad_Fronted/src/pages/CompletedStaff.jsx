@@ -116,7 +116,7 @@ const [complaints, setComplaints] = useState([]);
                     <td className="p-3">
                       <span
                         className={`px-3 py-1 rounded-full text-white text-sm ${
-                          complaint.status === "Available" ? "bg-green-500" : "bg-red-500"
+                        "bg-green-500" 
                         }`}
                       >
                         {complaint.status}

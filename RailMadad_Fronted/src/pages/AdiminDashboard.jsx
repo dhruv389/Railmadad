@@ -100,13 +100,13 @@ const AdminDashboard = () => {
 
       <input
         type="text"
-        placeholder="Search"
-        className="border border-gray-300 rounded p-2"
+        placeholder="Search Here"
+        className="text-sm pl-5 w-[20%] rounded-full shadow-sm p-2"
       />
     </div>
 
       <h1 className="mt-10 ml-8 font-mormal text-lg">Categories :</h1>
-      <div className="flex flex-wrap space-x-2 gap-2  rounded-full p-2">
+      <div className="flex flex-wrap  space-x-2 gap-2  rounded-full p-2">
     
         {options.map((option) => (
           <div

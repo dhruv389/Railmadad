@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useFirebase } from '../../firebase/firebase';
+import Tooltip from '../../components/Tooltip';
 
 
 const Track = () => {
@@ -75,12 +76,14 @@ const Track = () => {
 </span>
             </td>
 
-
-            <td className="" title={complaint.description} >
             
-            {complaint.description.substring(0,20)} .......
+            <td className=" cursor-pointer  z-50"  >
+            
+            
            
-             
+            {/* <Tooltip text={complaint.description}> */}
+  <p>{complaint.description.substring(0,20)} .......</p>
+  {/* </Tooltip> */}
              
             </td>
           </tr>

@@ -84,12 +84,12 @@ const Chatbot = () => {
   };
 
   return (
-    <div>
+    <div  className="z-50">
       {/* Floating Chat Button */}
-      <div className="fixed bottom-5 right-5 group">
-      <div className="fixed bottom-5 right-5 flex flex-col items-end">
+      <div className="fixed bottom-[3rem] right-8 group">
+      <div className="fixed bottom-[3rem] right-8 flex flex-col items-end">
   {/* Tooltip as a chat bubble */}
-  <div className=" mr-5 bg-gray-800 text-white text-sm px-4 py-2 rounded-t-lg  rounded-bl-lg shadow-md w-max animate-bounce">
+  <div className=" mr-5 bg-gray-800 text-white text-sm px-4 py-2 rounded-t-full  rounded-bl-full shadow-md w-max animate-bounce">
     🤖 Ask AI your doubts! 💡
   </div>
 
@@ -116,6 +116,11 @@ const Chatbot = () => {
 
           {/* Chat Body */}
           <div className="h-full overflow-y-auto p-3 space-y-2">
+          <div className="w-full flex justify-center items-center flex-col">
+            <img src="https://avatars.githubusercontent.com/u/117587892?v=4"  alt="" className="h-[3rem] w-[3rem] rounded-full" />
+            <p className="font-bold text-md text-gray-700 " > Dhaval Rathod</p>
+          </div>
+
             {messages.map((msg, index) => (
               <div key={index} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
                 <div

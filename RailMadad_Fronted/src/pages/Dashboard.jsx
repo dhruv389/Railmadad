@@ -20,8 +20,20 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="w-screen bg-[#f6f8f9]  min-h-screen flex  justify-center items-center" style={{ backgroundImage: `url(#)` ,backgroundRepeat:"no-repeat", objectFit:"cover" ,backgroundSize:"100%" }}>
+    <div className="w-screen   min-h-screen flex  justify-center items-center" style={{ backgroundImage: `url(#)` ,backgroundRepeat:"no-repeat", objectFit:"cover" ,backgroundSize:"100%" }}>
     
+
+
+
+
+
+   
+
+
+
+
+
+
       <div className="w-screen  gap-6 min-h-screen  flex justify-center items-center   ">
       <div className="w-[8rem]    rounded-3xl p-6 flex flex-col gap-8 items-center transition-all duration-300 shadow-xl">
       {/* Complaint Button */}
@@ -48,8 +60,8 @@ const Dashboard = () => {
     </div>
 
         <div
-          className="w-[65%] custom:w-[97%] bg-white rounded-3xl overflow-y-scroll  h-[85vh]"
-          style={{ boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
+          className="w-[65%] custom:w-[97%] shadow-md  rounded-3xl overflow-y-scroll  h-[85vh]"
+         
         >
           <Routes>
             <Route path="/train" element={<Train/>} />
