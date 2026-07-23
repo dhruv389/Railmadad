@@ -1,6 +1,6 @@
-import React from 'react'
-import { Link, useNavigate, useNavigation } from 'react-router-dom'
-import icon1 from "../Images/download (2).png"
+
+import { Link, useNavigate } from 'react-router-dom'
+// import icon1 from "../Images/download (2).png"
 import Sidebar from './Sidebar'
 import { useFirebase  } from '../firebase/firebase';
 import { signOut } from 'firebase/auth';

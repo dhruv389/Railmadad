@@ -3,6 +3,7 @@ import StatusChart from './StatusChart'
 import BarChart1 from './BarChart1'
 import { useContext } from 'react'
 import {AuthContext } from '../../Context/userContext'
+import { API_BASE_URL } from '../../config'
 
 const AdminAnalytics = () => {
   const {chartData} = useContext(AuthContext);
@@ -13,7 +14,8 @@ const AdminAnalytics = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:5000/api/getcmplaintsdata');
+      const response = await fetch(`${API_BASE_URL}/api/getcmplaintsdata`);
+
       const data = await response.json();
       setStats(data);
       setLoading(false);

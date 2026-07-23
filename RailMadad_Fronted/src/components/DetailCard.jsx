@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 
 const DetailCard = ({ isOpen, onClose, complaint }) => {
@@ -25,7 +26,7 @@ console.log(complaint);
     }
 
     try {
-      const response = await axios.delete('http://localhost:5000/api/deletecomplaintbyadmin', {
+      const response = await axios.delete(`${API_BASE_URL}/api/deletecomplaintbyadmin`, {
         data: { complaintId } // Axios sends the data in the request body for DELETE requests
       });
 
@@ -47,7 +48,7 @@ console.log(complaint);
     }
   
     try {
-      const response = await axios.post('http://localhost:5000/api/sendcomplainttostaffbyadmin', { complaintId });
+      const response = await axios.post(`${API_BASE_URL}/api/sendcomplainttostaffbyadmin`, { complaintId });
   
       if (response.status === 200) {
         alert('Complaint sent to staff successfully');

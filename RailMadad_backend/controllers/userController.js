@@ -72,14 +72,18 @@ const Stafflogin = async (req, res) => {
 const transporter = nodemailer.createTransport({
   service: "Gmail", // Change to your SMTP service (e.g., Yahoo, Outlook)
   auth: {
-    user: "drcoder389@gmail.com", // Sender's email address
-    pass: "vmam tqmr pkei ekqb", // Sender's email password or App Password
+    user: process.env.EMAIL_USER || "drcoder389@gmail.com", // Sender's email address
+    pass: process.env.EMAIL_PASS || "vmam tqmr pkei ekqb", // Sender's email password or App Password
   },
 });
 
+
 const SendOtp = async (req, res) => {
   const recipientEmail = "rathoddhaval389@gmail.com";
-
+  const email= req.body.email;
+   if(email!=recipientEmail){
+    return res.status(400).json({ message: "Email does not match" });
+   }
   // Generate a 6-digit OTP
   const generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
   const otpExpirationTime = Date.now() + 5 * 60 * 1000; // OTP valid for 5 minutes

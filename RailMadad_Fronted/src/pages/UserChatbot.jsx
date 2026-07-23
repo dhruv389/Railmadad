@@ -8,6 +8,8 @@ import { RxCross2 } from "react-icons/rx";
 import { useFirebase } from '../firebase/firebase';
 import { BsWechat } from "react-icons/bs";
 import jsonData from "../pages/Stations.json";
+import { API_BASE_URL } from '../config';
+
 function UserChatbot() {
   const { useruid } = useFirebase();
   const userId = "12345"; // Initialize userId with useruid
@@ -18,17 +20,16 @@ function UserChatbot() {
   const [roomJoined, setRoomJoined] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [image , setImage] = useState('');
-const messagesEndRef = useRef(null);
-const [suggestions, setSuggestions] = useState([]);
+  const messagesEndRef = useRef(null);
+  const [suggestions, setSuggestions] = useState([]);
   const [inputValue, setInputValue] = useState("");
-
-  // Use a ref to store the socket instance
   const socketRef = useRef(null);
+
 
   // Initialize socket connection when the component mounts
   useEffect(() => {
     // Create the socket connection
-socketRef.current = io('http://localhost:5000');
+    socketRef.current = io(API_BASE_URL);
 
     // Clean up the socket connection when the component unmounts
     return () => {
@@ -62,8 +63,9 @@ socketRef.current = io('http://localhost:5000');
     const tmp= station.toLowerCase().trim();
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/getchatmessage?department=${department}&station=${tmp}&userId=${userId}`
+        `${API_BASE_URL}/api/getchatmessage?department=${department}&station=${tmp}&userId=${userId}`
       );
+
       setMessages(response.data);
     } catch (error) {
       console.error('Failed to fetch messages:', error);

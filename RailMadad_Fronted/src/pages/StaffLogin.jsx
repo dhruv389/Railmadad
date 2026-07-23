@@ -1,8 +1,9 @@
-import  {  useState, useContext, useRef } from 'react';
+import { useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaUsersGear } from "react-icons/fa6";
-import {AuthContext } from '../Context/userContext'
+import { AuthContext } from '../Context/userContext';
+import { API_BASE_URL } from '../config';
 import staff from "../Images/staffi.jpeg"
 
 const StaffLogin = () => {
@@ -22,7 +23,7 @@ const StaffLogin = () => {
     
       try {
         // Post data to the backend
-        const response = await axios.post('http://localhost:5000/api/getstaff', {
+        const response = await axios.post(`${API_BASE_URL}/api/getstaff`, {
           email,
           password,
         });

@@ -6,8 +6,9 @@ import { IoSend } from "react-icons/io5";
 import { RiUserSmileFill } from "react-icons/ri";
 import { RiMessage3Fill } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
+import { API_BASE_URL } from '../config';
 
-const socket = io('http://localhost:5000');
+const socket = io(API_BASE_URL);
 
 function StaffChatbot({ department = "En", station = "ahmedabad" }) {
 
@@ -30,9 +31,10 @@ function StaffChatbot({ department = "En", station = "ahmedabad" }) {
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        const { data } = await axios.get(`http://localhost:5000/api/getchatusers`, {
+        const { data } = await axios.get(`${API_BASE_URL}/api/getchatusers`, {
           params: { department, station },
         });
+
         setUsers(data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -44,7 +46,7 @@ function StaffChatbot({ department = "En", station = "ahmedabad" }) {
 
   const fetchMessages = async (userId) => {
     try {
-      const { data } = await axios.get(`http://localhost:5000/api/getchatmessage`, {
+      const { data } = await axios.get(`${API_BASE_URL}/api/getchatmessage`, {
         params: { department: department.trim(), station, userId },
       });
       setMessages(data);

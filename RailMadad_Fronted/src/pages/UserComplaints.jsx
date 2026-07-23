@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useFirebase } from '../firebase/firebase.jsx';
+import { API_BASE_URL } from '../config';
 
 const UserComplaints = () => {
     const firebase = useFirebase();
@@ -12,7 +13,8 @@ const UserComplaints = () => {
       // Fetch complaints from your API
       const fetchComplaints = async () => {
         try {
-          const response = await fetch(`http://localhost:5000/api/User/1UyyQ7Wb4SRbd1xIHkxl4JblCYD3`); // Replace with your API endpoint
+          const response = await fetch(`${API_BASE_URL}/api/User/1UyyQ7Wb4SRbd1xIHkxl4JblCYD3`); // Replace with your API endpoint
+
           const data = await response.json();
           setComplaints(data);
           console.log(complaints);

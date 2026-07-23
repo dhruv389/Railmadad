@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useFirebase } from "../firebase/firebase";
 import {AuthContext } from '../Context/userContext'
 import DetailCard3 from "../components/DetailCard3";
+import { API_BASE_URL } from '../config';
 
 const CompletedComplaint = ({activeTab2}) => {
   const { useruid } = useFirebase(); // Get the user ID from Firebase
@@ -37,7 +38,7 @@ useEffect(() => {
     try {
       console.log(activeTab2)
       const response = await fetch(
-        `http://localhost:5000/api/getadmincomplaints?a=Admin&b=${adminData.data.station}&s=Resolved&c=${activeTab2}`
+        `${API_BASE_URL}/api/getadmincomplaints?a=Admin&b=${adminData.data.station}&s=Resolved&c=${activeTab2}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");

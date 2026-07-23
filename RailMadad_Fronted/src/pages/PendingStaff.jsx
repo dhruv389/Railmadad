@@ -3,6 +3,7 @@ import DetailCard2 from "../components/DetailCard2";
 import { Link } from "react-router-dom";
 import { useState ,useEffect,useContext} from 'react';
 import {AuthContext} from '../Context/userContext';
+import { API_BASE_URL } from '../config';
 
 const PendingStaff = ({activeTab2}) => {
 
@@ -36,7 +37,7 @@ useEffect(() => {
     try {
       console.log(activeTab2)
       const response = await fetch(
-        `http://localhost:5000/api/getadmincomplaints?a=Staff&b=${staffData.data.station}&s=In Progress&c=${activeTab2}`
+        `${API_BASE_URL}/api/getadmincomplaints?a=Staff&b=${staffData.data.station}&s=In Progress&c=${activeTab2}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");

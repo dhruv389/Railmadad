@@ -1,4 +1,3 @@
-
 import { TbTrain } from "react-icons/tb";
 
 import i1 from "../Images/download.png"
@@ -16,33 +15,7 @@ import UserChatbot from "./UserChatbot";
 const Home = () => {
 	
 
-	// const [data, setData] = useState(null);
-	// const [error, setError] = useState(null);
 
-	// useEffect(() => {
-	//   const fetchData = async () => {
-	// 	const url = 'https://irctc1.p.rapidapi.com/api/v1/searchStation?query=Ahmedabad';
-	// 	const options = {
-	// 	  method: 'GET',
-	// 	  headers: {
-	// 		'x-rapidapi-key': 'f4f6a8093cmshc157890d7656493p1ee5c0jsnbb103a292bd4',
-	// 		'x-rapidapi-host': 'irctc1.p.rapidapi.com'
-	// 	  }
-	// 	};
-
-	// 	try {
-	// 	  const response = await fetch(url, options);
-	// 	  const result = await response.json(); // Parsing the result as JSON
-	// 	  setData(result);
-	// 	  console.log(result);
-	// 	} catch (error) {
-	// 	  setError(error);
-	// 	  console.error(error);
-	// 	}
-	//   };
-
-	//   fetchData();
-	// }, []);
 	const auth = getAuth();
 	onAuthStateChanged(auth, (user) => {
 		if (user) {

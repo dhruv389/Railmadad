@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 
 import Swal from "sweetalert2";
+import { API_BASE_URL } from '../config';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -21,7 +22,8 @@ export const AuthProvider = ({ children }) => {
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
-  //       const response = await fetch('http://localhost:5000/api/getcomlaintsdata'); // Replace with your API endpoint
+  //       const response = await fetch(`${API_BASE_URL}/api/getcomlaintsdata`); // Replace with your API endpoint
+
   //       const result = await response.json();
      
   //      setChartData(result);

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useFirebase } from '../../firebase/firebase';
 import Tooltip from '../../components/Tooltip';
+import { API_BASE_URL } from '../../config';
 
 
 const Track = () => {
@@ -12,7 +13,8 @@ const Track = () => {
     // Fetch complaints from your API using the useruid
     const fetchComplaints = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/User/${useruid}`); // Replace with your API endpoint
+        const response = await fetch(`${API_BASE_URL}/api/User/${useruid}`); // Replace with your API endpoint
+
         const data = await response.json();
         setComplaints(data);
         console.log(data); // Updated to log the fetched data

@@ -6,6 +6,7 @@ import {AuthContext } from '../Context/userContext'
 import Loader from '../components/Loader';
 import { GrUserAdmin } from "react-icons/gr";
 import admin from  "../Images/admini.jpeg"
+import { API_BASE_URL } from '../config';
 
 
 const AdminLogin = () => {
@@ -25,7 +26,7 @@ const AdminLogin = () => {
       
         try {
           // Post data to the backend
-          const response = await axios.post('http://localhost:5000/api/getadmin', {
+          const response = await axios.post(`${API_BASE_URL}/api/getadmin`, {
             email,
             password,
           });

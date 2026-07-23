@@ -22,7 +22,12 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors());
+const allowedOrigin = process.env.CLIENT_URL || '*';
+
+app.use(cors({
+  origin: allowedOrigin === '*' ? true : [allowedOrigin, 'http://localhost:5173', 'http://localhost:3000'],
+  credentials: true
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
@@ -42,10 +47,12 @@ const server = http.createServer(app);
 // Initialize Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL || 'http://localhost:5173', // Allow your frontend to connect
-    methods: ['GET', 'POST'],
+    origin: allowedOrigin === '*' ? '*' : [allowedOrigin, 'http://localhost:5173', 'http://localhost:3000'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
   },
 });
+
 
 // Initialize Socket.IO logic
 initializeSocket(io);

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { Cloudinary } from "cloudinary-core";
+import { API_BASE_URL } from '../config';
 
 const  DetailCard2 = ({ isOpen, onClose,complaint }) => {
 
@@ -55,7 +56,7 @@ const  DetailCard2 = ({ isOpen, onClose,complaint }) => {
     }
   
     try {
-      const response = await axios.post('http://localhost:5000/api/send_complaint_to_admin_bystaff',{ complaintId,AfterImage:mediaUrl });
+      const response = await axios.post(`${API_BASE_URL}/api/send_complaint_to_admin_bystaff`,{ complaintId,AfterImage:mediaUrl });
   
       if (response.status === 200) {
         alert('Complaint sent to staff successfully');

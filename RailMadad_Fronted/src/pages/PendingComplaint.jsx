@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 
 import {AuthContext } from '../Context/userContext'
+import { API_BASE_URL } from '../config';
 
 const PendingComplaint = ({activeTab2}) => {
   
@@ -33,7 +34,7 @@ useEffect(() => {
     try {
       console.log(activeTab2)
       const response = await fetch(
-        `http://localhost:5000/api/getadmincomplaints?a=Admin&b=${adminData.data.station}&s=Pending&c=${activeTab2}`
+        `${API_BASE_URL}/api/getadmincomplaints?a=Admin&b=${adminData.data.station}&s=Pending&c=${activeTab2}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
