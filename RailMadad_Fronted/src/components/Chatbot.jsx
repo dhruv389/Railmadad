@@ -3,8 +3,10 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { RiUserSmileFill } from "react-icons/ri";
 import { IoSend } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
+import { GEMINI_API_KEY } from "../config";
 
-const genAI = new GoogleGenerativeAI("AIzaSyCZpCZCeOHtMk2s2T3_ZUuVoifq_b4dIKQ"); 
+const genAI = new GoogleGenerativeAI(GEMINI_API_KEY); 
+
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
 const predefinedPrompt = `

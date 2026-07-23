@@ -12,9 +12,9 @@ import Swal from 'sweetalert2';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import Loader from "../../components/Loader.jsx";
 import Loader2 from "../../components/Loader2.jsx";
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL, GEMINI_API_KEY } from '../../config';
 
-const Enquiry = () => {
+function Enquiry() {
   const [suggestions, setSuggestions] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [trainNo, setTrainNo] = useState("");
@@ -48,7 +48,7 @@ const Enquiry = () => {
       setLoading2(true);
       
       // Initialize Google Generative AI
-      const genAI = new GoogleGenerativeAI("AIzaSyC9Uzc1ZyQ3ve_AHqYtN6H8sk-n0wgpqmM");
+      const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
       const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
       
       // Analyze image with AI
@@ -130,7 +130,7 @@ const Enquiry = () => {
     
     try {
       // Initialize Google Generative AI for complaint validation
-      const genAI = new GoogleGenerativeAI("AIzaSyCZpCZCeOHtMk2s2T3_ZUuVoifq_b4dIKQ");
+      const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
       const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
       const prompt = `
