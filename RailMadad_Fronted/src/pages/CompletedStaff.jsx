@@ -46,7 +46,8 @@ const [complaints, setComplaints] = useState([]);
           const data = await response.json();
            console.log(data);
         
-          setComplaints(data.complaints);
+          setComplaints(Array.isArray(data?.complaints) ? data.complaints : (Array.isArray(data) ? data : []));
+
           console.log( data);
         } catch (error) {
           console.error("Error fetching complaints:", error);

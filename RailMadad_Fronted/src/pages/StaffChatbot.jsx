@@ -35,7 +35,7 @@ function StaffChatbot({ department = "En", station = "ahmedabad" }) {
           params: { department, station },
         });
 
-        setUsers(data);
+        setUsers(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -49,7 +49,8 @@ function StaffChatbot({ department = "En", station = "ahmedabad" }) {
       const { data } = await axios.get(`${API_BASE_URL}/api/getchatmessage`, {
         params: { department: department.trim(), station, userId },
       });
-      setMessages(data);
+      setMessages(Array.isArray(data) ? data : []);
+
     } catch (error) {
       console.error("Failed to fetch messages:", error);
     }

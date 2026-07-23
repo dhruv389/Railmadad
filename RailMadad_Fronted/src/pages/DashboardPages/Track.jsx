@@ -16,7 +16,7 @@ const Track = () => {
         const response = await fetch(`${API_BASE_URL}/api/User/${useruid}`); // Replace with your API endpoint
 
         const data = await response.json();
-        setComplaints(data);
+        setComplaints(Array.isArray(data) ? data : (Array.isArray(data?.complaints) ? data.complaints : []));
         console.log(data); // Updated to log the fetched data
       } catch (error) {
         console.error('Error fetching complaints:', error);
@@ -51,42 +51,23 @@ const Track = () => {
         </tr>
       </thead>
       <tbody>
-        {complaints.map((complaint, index) => (
+        {(Array.isArray(complaints) ? complaints : []).map((complaint, index) => (
           <tr key={complaint._id} className="border-b ">
             <td className="p-3">{index + 1}</td>
             <td className="p-3 flex items-center">
               <img
-                src={complaint.media[0] || 'default-image-url.jpg'} // Handle missing media
+                src={Array.isArray(complaint.media) && complaint.media[0] ? complaint.media[0] : 'default-image-url.jpg'} // Handle missing media
                 alt="Media"
                 className="w-14 h-14 mr-3 rounded-full"
               />
+              {complaint.complaint}
             </td>
             <td className="p-3">{complaint.category}</td>
-           
-            <td className="p-3 ">{calculateDaysSince(complaint.createdAt)} days ago</td>
-            <td className="p-3">
-            <span
-  className={`px-3 py-1 rounded-full text-white text-sm ${
-    complaint.status === 'Resolved'
-      ? 'bg-green-500' // Green for 'Available'
-      : complaint.status === 'Pending'
-      ? 'bg-red-500' // Yellow for 'Pending'
-      : 'bg-yellow-400' // Red for any other status (e.g., 'Resolved')
-  }`}
->
-  {complaint.status}
-</span>
-            </td>
-
-            
-            <td className=" cursor-pointer  z-50"  >
-            
-            
-           
-            {/* <Tooltip text={complaint.description}> */}
-  <p>{complaint.description.substring(0,20)} .......</p>
-  {/* </Tooltip> */}
-             
+            <td className="p-3">{calculateDaysSince(complaint.createdAt)} days ago</td>
+            <td className="p-3 font-semibold text-green-600">{complaint.status}</td>
+            <td className="p-3 flex items-center gap-2 max-w-[15rem]">
+              <p className="truncate overflow-hidden text-ellipsis whitespace-nowrap">{complaint.description}</p>
+              <Tooltip text={complaint.description} />
             </td>
           </tr>
         ))}

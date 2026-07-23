@@ -66,7 +66,8 @@ function UserChatbot() {
         `${API_BASE_URL}/api/getchatmessage?department=${department}&station=${tmp}&userId=${userId}`
       );
 
-      setMessages(response.data);
+      setMessages(Array.isArray(response.data) ? response.data : []);
+
     } catch (error) {
       console.error('Failed to fetch messages:', error);
     }
@@ -286,7 +287,8 @@ useEffect(() => {
                       </button>
         </div>
         <div className="flex-1 flex-col p-4 w-full overflow-y-auto space-y-3">
-          {messages.map((msg, index) => (
+          {(Array.isArray(messages) ? messages : []).map((msg, index) => (
+
           
 
 

@@ -16,7 +16,7 @@ const UserComplaints = () => {
           const response = await fetch(`${API_BASE_URL}/api/User/1UyyQ7Wb4SRbd1xIHkxl4JblCYD3`); // Replace with your API endpoint
 
           const data = await response.json();
-          setComplaints(data);
+          setComplaints(Array.isArray(data) ? data : (Array.isArray(data?.complaints) ? data.complaints : []));
           console.log(complaints);
         } catch (error) {
           console.error('Error fetching complaints:', error);
@@ -30,7 +30,7 @@ const UserComplaints = () => {
   return (
     <div>
       <h1>Complaints</h1>
-      {complaints.length > 0 ? (
+      {Array.isArray(complaints) && complaints.length > 0 ? (
         <ul className='flex flex-col gap-4'>
           {complaints.map((complaint) => (
             <li key={complaint._id} className='w-full flex flex-col bg-yellow-200'>
@@ -38,10 +38,11 @@ const UserComplaints = () => {
               <p>Description: {complaint.description}</p>
               <p>Status: {complaint.status}</p>
               <p>Submitted by: {complaint.user}</p>
-              {complaint.media && complaint.media.length > 0 && (
+              {Array.isArray(complaint.media) && complaint.media.length > 0 && (
                 <div>
                   <h3>Media:</h3>
                   {complaint.media.map((file, index) => (
+
                     <div key={index}>
                       <p>Type: {file.fileType}</p>
                       <a href={file.url} target="_blank" rel="noopener noreferrer">
