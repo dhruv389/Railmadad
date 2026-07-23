@@ -70,12 +70,13 @@ const Stafflogin = async (req, res) => {
 };
 
 const transporter = nodemailer.createTransport({
-  service: "Gmail", // Change to your SMTP service (e.g., Yahoo, Outlook)
+  service: "Gmail",
   auth: {
-    user: process.env.EMAIL_USER || "drcoder389@gmail.com", // Sender's email address
-    pass: process.env.EMAIL_PASS || "vmam tqmr pkei ekqb", // Sender's email password or App Password
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
+
 
 
 const SendOtp = async (req, res) => {

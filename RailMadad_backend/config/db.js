@@ -6,12 +6,14 @@ dotenv.config();
 
 const connectDB = async () => {
   try {
-    const mongoUri = process.env.MONGO_URI || "mongodb+srv://drcoder389:V1SidMeEfRU6PyiK@sih24-db.9i7yz.mongodb.net/?retryWrites=true&w=majority&appName=sih24-db";
-    await mongoose.connect(mongoUri).then(()=>  console.log('MongoDB connected successfully')).catch(e=>console.log(e));
-   
+    const mongoUri = process.env.MONGO_URI;
+    if (!mongoUri) {
+      throw new Error("MONGO_URI environment variable is not defined");
+    }
+    await mongoose.connect(mongoUri);
+    console.log('MongoDB connected successfully');
   } catch (err) {
-
-    console.error(err.message);
+    console.error('MongoDB Connection Error:', err.message);
     process.exit(1); // Exit process with failure
   }
 };
