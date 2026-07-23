@@ -7,7 +7,8 @@ import {AuthContext} from '../Context/userContext';
 import { API_BASE_URL } from '../config';
 import Loader from "../components/Loader";
 
-const PendingComplaint = ({activeTab2}) => {
+const CompletedStaff = ({activeTab2}) => {
+
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 const [complaints, setComplaints] = useState([]);
@@ -150,4 +151,4 @@ const [complaints, setComplaints] = useState([]);
   )
 }
 
-export default PendingComplaint
+export default CompletedStaff;
